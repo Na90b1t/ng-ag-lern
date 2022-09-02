@@ -1,0 +1,12 @@
+<p>login works!</p>
+<div class="login-form" *ngIf="!session; else elseBlock">
+    <label>Login</label>
+    <input name="login" type="text" [(ngModel)]="login">
+    <label>Password</label>
+    <input name="login" type="password" [(ngModel)]="password">
+    <button (click)="requestApi()">Enter</button>
+</div>
+
+<ng-template #elseBlock>
+    <button (click)="logOut()">log out</button>
+</ng-template>
