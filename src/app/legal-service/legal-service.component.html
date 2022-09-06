@@ -1,0 +1,19 @@
+<div *ngIf="session">
+    <div class="product-form">
+        <label>lastName</label>
+        <input name="lastName" type="text" [(ngModel)]="policyHolder.lastName">
+        <label>firstName</label>
+        <input name="firstName" type="text" [(ngModel)]="policyHolder.firstName">
+        <label>middleName</label>
+        <input name="middleName" type="text" [(ngModel)]="policyHolder.middleName">
+        <label>phone</label>
+        <input name="phone" type="number" [(ngModel)]="policyHolder.phone">
+        <label>email</label>
+        <input name="email" type="email" [(ngModel)]="policyHolder.email">
+        <label>city</label>
+        <input name="city" type="text" [(ngModel)]="policyHolder.city">
+    </div>
+    <button (click)="getAvailablePrograms()">Get available programs</button>
+    <button (click)="saveContract()">Save contract</button>
+    <button (click)="openContract()">Open contract</button>
+</div>

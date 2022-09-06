@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ng-ag-lern';
+  session: any = '';
+
+  constructor() { }
+
+  ngOnInit(): void { }
+
+  checkSession() {
+    this.session = sessionStorage.getItem('session azaza');
+  }
 }
