@@ -1,33 +1,36 @@
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-legal-service',
-  templateUrl: './legal-service.component.html',
-  styleUrls: ['./legal-service.component.scss']
+  selector: 'app-calculation',
+  templateUrl: './calculation.component.html',
+  styleUrls: ['./calculation.component.scss']
 })
-export class LegalServiceComponent implements OnInit {
+export class CalculationComponent implements OnInit {
+
+  private requestUrl = 'https://testportal2.agentology.ru/api/agentology/'; // адрес сервера для взаимодествия с помощью API
   key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f'; // ключ API
   documentCode = ''; // guid сохраненного документа,
   documentNumber = ''; // Номер договора
+  programmSelected: boolean | undefined;
 
-  private requestUrl = 'https://testportal2.agentology.ru/api/agentology/'; // адрес сервера для взаимодествия с помощью API
-
-  contractData = {}; // объект с массивом доступных программ
+  emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   objRequest = { // Структура объекта request
-    content:{  
+    content:{ 
+      // Данные программы не привязаны, пока не сделал их заполение из ответа.
       contractData:{  
-          product:{                // объект выбранной программы, полученный в числе прочих в запросе доступных программ по продукту 'Юридический сервис' 
-             code: 'optimal',       // код программы
-             name: 'Оптимальный',   // название программы
-             premium: 3000,         // стоимость программы
+          product:  {
+            code: 'optimal',
+            name: 'Оптимальный',
+            premium: 3000,
           }
       },
       // Данные страхователя привязаны, но чтобы не вводить их руками оставляю заполенными
       policyHolder: {  
-          lastName: 'Иванов',
+          lastName: '',
           firstName: 'Иван',
           middleName: 'Иванович',
+          dob: '',
           phone: '89003334455',
           email: 'w@mail.ru',
           city: 'NY',
@@ -35,48 +38,17 @@ export class LegalServiceComponent implements OnInit {
     }
   }
 
-  policyHolder = this.objRequest.content.policyHolder; // сокращаю часть пути для компактности записи
+  policyHolder = this.objRequest.content.policyHolder;
 
   @Input() session: any;
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
-  async getAvailablePrograms() {
-    let register = {
-      key: this.key,
-      operation: 'register.get',
-      data: {
-        register: 'juridicalService',
-      },
-    };
-
-    const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
-    formData.append('key', register.key);
-    formData.append('operation', register.operation);
-    formData.append('data', JSON.stringify(register.data));
-
-    let response = await fetch(this.requestUrl, {
-      method: 'POST',
-      body: formData
-    });
-    console.log('response', response);
-
-    if (response.ok) {
-      let json = await response;
-      json.json().then(azaza => {
-        console.log('Ответ системы:', azaza);
-        if(azaza.success) {
-          console.log('azaza.success', azaza.success);
-          this.contractData = azaza.result;
-        } else {
-          console.log('azaza.success:' + ' ' + azaza.success);
-        }
-      });
-    } else {
-      console.log('Ошибка HTTP: ' + response.status);
-    }
+  dateChange($event: { target: { value: any; }; }) {
+    console.log('dateChange($event)', $event.target.value);
   }
 
   async saveContract() {
@@ -91,7 +63,7 @@ export class LegalServiceComponent implements OnInit {
       }
     }
 
-    console.log('save', save);
+    console.log('save', save); // данные + введенные пользователем т отправляемые на сервер
 
     const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
     formData.append('key', save.key);
@@ -108,7 +80,7 @@ export class LegalServiceComponent implements OnInit {
       json.json().then(azaza => {
         if(azaza.success) {
           console.log('Success save', azaza.success);
-          console.log('Success save', azaza);
+          console.log('azaza', azaza);
           this.documentCode = azaza.documentCode;
         } else {
           alert('Error save:' + ' ' + azaza.error?.code);

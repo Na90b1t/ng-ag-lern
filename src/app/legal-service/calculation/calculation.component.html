@@ -1,0 +1,49 @@
+<form *ngIf="session">
+  <div class="product-form">
+    <div class="product-form__row">
+      <label>lastName</label>
+      <input name="lastName" required="required" minlength="1" maxlength="30" class="product-form__input" name="lastName" type="text" [(ngModel)]="policyHolder.lastName" placeholder=" ">
+    </div>
+    <div class="product-form__row">
+      <label>firstName</label>
+      <input name="firstName" required="required" minlength="1" maxlength="30" 
+        class="product-form__input" name="firstName" type="text" [(ngModel)]="policyHolder.firstName" placeholder=" ">
+    </div>
+    <div class="product-form__row">
+      <label>middleName</label>
+      <input name="middleName" required="required" minlength="1" maxlength="30" 
+        class="product-form__input" name="middleName" type="text" [(ngModel)]="policyHolder.middleName" placeholder=" ">
+    </div>
+    <div class="product-form__row">
+      <label>date of Birth</label>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input name="dob" matInput [matDatepicker]="picker" (dateChange)="dateChange($event)"
+        [(ngModel)]="policyHolder.dob">
+        <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="product-form__row">
+      <label>phone</label>
+      <input name="phone" required="required" minlength="7" maxlength="12"
+        class="product-form__input" name="phone" type="tel" [(ngModel)]="policyHolder.phone" placeholder=" ">
+    </div>
+    <div class="product-form__row">
+      <label>email</label>
+      <input name="email" required="required" minlength="1" maxlength="30" 
+        class="product-form__input" name="email" type="email" [(ngModel)]="policyHolder.email" placeholder=" ">
+    </div>
+    <div class="product-form__row">
+      <label>city</label>
+      <input name="city" required="required" minlength="1" maxlength="30" 
+        class="product-form__input" name="city" type="text" [(ngModel)]="policyHolder.city" placeholder=" ">
+    </div>
+  </div>
+  <div>
+    <input type="submit" />
+  </div>
+  <button (click)="saveContract()">Save contract</button>
+  <button (click)="openContract()">Open contract</button>
+</form>

@@ -1,0 +1,23 @@
+.selected {
+    background-color: blue;
+}
+
+.product-form {
+    margin: 50px 20px;
+
+    &__row {
+        margin-bottom: 20px;
+    }
+
+    &__input {
+        min-width: 180px;
+
+        &:invalid:not(:placeholder-shown) {
+            border: 1px solid red;
+        }
+
+        &:valid:not(:placeholder-shown) {
+            border: 1px solid greenyellow;
+        }
+    }
+}

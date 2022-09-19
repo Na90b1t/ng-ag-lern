@@ -5,6 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+
 export class LoginComponent implements OnInit {
   login = '';
   password = '';
@@ -18,13 +19,14 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.setItem('login azaza', JSON.stringify(''));
     this.login = JSON.parse(localStorage.getItem('login azaza') || '');
   }
 
   loginSession() {
     this.outputSession.emit();
   }
-  
+
   async requestApi() {
     let authorization = {
       key: this.key,
@@ -49,6 +51,7 @@ export class LoginComponent implements OnInit {
       let json = await response;
       json.json().then(azaza => {
         if(azaza.success) {
+          console.log('authorization response', azaza); // ответ на авторизацию.
           console.log('authorization', azaza.success); // подтверждение авторизации.
           localStorage.setItem('login azaza', JSON.stringify(authorization.data.login));
           sessionStorage.setItem('session azaza', azaza.result.session);
