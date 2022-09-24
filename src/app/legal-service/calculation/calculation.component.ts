@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+// import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @Component({
   selector: 'app-calculation',
