@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @Component({
   selector: 'app-calculation',
@@ -37,6 +38,10 @@ export class CalculationComponent implements OnInit {
       }
     }
   }
+
+  maskOptions = {
+    mask: '+{7}(000)000-00-00'
+  };
 
   policyHolder = this.objRequest.content.policyHolder;
 

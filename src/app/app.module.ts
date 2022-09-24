@@ -7,6 +7,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+// import { InputMask } from 'imask';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { CalculationComponent } from './legal-service/calculation/calculation.component';
@@ -26,7 +29,8 @@ import { CustomerDataComponent } from './legal-service/customer-data/customer-da
     MatDatepickerModule,
     MatInputModule,
     MatFormFieldModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,12 +2,24 @@
   <div class="product-form">
     <div class="product-form__row">
       <label>lastName</label>
-      <input name="lastName" required="required" minlength="1" maxlength="30" class="product-form__input" name="lastName" type="text" [(ngModel)]="policyHolder.lastName" placeholder=" ">
+      <input #spy name="lastName" required="required" minlength="1" maxlength="30" class="product-form__input" name="lastName" type="text" [(ngModel)]="policyHolder.lastName" placeholder=" ">
+      {{spy.className}}
     </div>
     <div class="product-form__row">
       <label>firstName</label>
-      <input name="firstName" required="required" minlength="1" maxlength="30" 
-        class="product-form__input" name="firstName" type="text" [(ngModel)]="policyHolder.firstName" placeholder=" ">
+      <input 
+        name="firstName"
+        required="required"
+        minlength="1"
+        maxlength="30"
+        class="product-form__input"
+        name="firstName"
+        type="text"
+        placeholder=" "
+        pattern="/^[а-яА-Я]"
+        [mask]="'(000) 00 000-00'"
+        [(ngModel)]="policyHolder.firstName"
+      >
     </div>
     <div class="product-form__row">
       <label>middleName</label>
@@ -27,8 +39,10 @@
     </div>
     <div class="product-form__row">
       <label>phone</label>
-      <input name="phone" required="required" minlength="7" maxlength="12"
-        class="product-form__input" name="phone" type="tel" [(ngModel)]="policyHolder.phone" placeholder=" ">
+      <input name="phone" required="required"
+        class="product-form__input" name="phone" type="tel" 
+        mask=" (000) 000-00-00"
+        [(ngModel)]="policyHolder.phone" placeholder=" ">
     </div>
     <div class="product-form__row">
       <label>email</label>
