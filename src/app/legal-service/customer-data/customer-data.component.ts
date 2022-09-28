@@ -1,6 +1,4 @@
 import { Input, Component, OnInit } from '@angular/core';
-// import { InputMask } from 'imask'; 
-// import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @Component({
   selector: 'app-customer-data',

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,13 @@ export class LoginComponent implements OnInit {
 
   private requestUrl = 'https://testportal2.agentology.ru/api/agentology/';
 
+  public exampleUsersService: Array<any>;
+
   @Output() outputSession: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private dataService: DataService) {
+    this.exampleUsersService = this.dataService.getData();
+  }
 
   ngOnInit(): void {
     localStorage.setItem('login azaza', JSON.stringify(''));

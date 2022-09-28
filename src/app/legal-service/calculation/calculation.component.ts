@@ -39,6 +39,8 @@ export class CalculationComponent implements OnInit {
     }
   }
 
+  public customPatterns = { 'S': { pattern: new RegExp('\[a-zA-Z\]')} };
+
   maskOptions = {
     mask: '+{7}(000)000-00-00'
   };
