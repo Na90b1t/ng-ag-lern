@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public exampleUsersService: Array<any>;
 
-  @Output() outputSession: EventEmitter<any> = new EventEmitter();
+  @Output() outputSession: EventEmitter<any> = new EventEmitter(); // передаем сессию для отображения компонентов
 
   constructor(private dataService: DataService) {
     this.exampleUsersService = this.dataService.getData();
@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('login azaza', JSON.stringify(''));
     this.login = JSON.parse(localStorage.getItem('login azaza') || '');
+    console.log('this.login', this.login); // ? нет логина
   }
 
   loginSession() {
@@ -53,8 +54,8 @@ export class LoginComponent implements OnInit {
     });
 
     if (response.ok) {
-      let json = await response;
-      json.json().then(azaza => {
+      let jsonResponse = await response;
+      jsonResponse.json().then(azaza => {
         if(azaza.success) {
           console.log('authorization response', azaza); // ответ на авторизацию.
           console.log('authorization', azaza.success); // подтверждение авторизации.

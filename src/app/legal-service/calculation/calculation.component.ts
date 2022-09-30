@@ -33,13 +33,14 @@ export class CalculationComponent implements OnInit {
           middleName: 'Иванович',
           dob: '',
           phone: '89003334455',
-          email: 'w@mail.ru',
+          email: 'sj-smirnov@mail.ru',
           city: 'NY',
       }
     }
   }
 
-  public customPatterns = { 'S': { pattern: new RegExp('\[a-zA-Z\]')} };
+  public customPatterns = { 'S': { pattern: new RegExp('\[a-zA-Z\]+')} };
+  rusPatterns = new RegExp('\[а-яА-Я\]+');
 
   maskOptions = {
     mask: '+{7}(000)000-00-00'

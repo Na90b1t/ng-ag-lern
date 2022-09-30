@@ -2,43 +2,45 @@
     <div class="product-form">
         <div class="product-form__row">
             <label>lastName</label>
-            <input #spy
+            <input
                 class="product-form__input"
                 required="required"
                 name="lastName"
                 type="text"
                 minlength="2"
                 maxlength="10"
-                pattern="customPatterns"
-                mask="S"
+                [pattern]="rusPatterns"
+                mask="S{5}"
                 placeholder=" "
-                [(ngModel)]="policyHolder.lastName">
-                {{spy.className}}
+                [(ngModel)]="policyHolder.lastName"
+            >
         </div>
         <div class="product-form__row">
             <label>firstName</label>
-        <input
-            class="product-form__input"
-            required="required"
-            name="firstName"
-            type="text"
-            minlength="2"
-            maxlength="10"
-            placeholder=" "
-            pattern="/^[а-яА-Я]"
-            [(ngModel)]="policyHolder.firstName">
+            <input
+                class="product-form__input"
+                required="required"
+                name="firstName"
+                type="text"
+                minlength="2"
+                maxlength="10"
+                placeholder=" "
+                pattern="[А-Яа-яЁё]+"
+                [(ngModel)]="policyHolder.firstName"
+            >
         </div>
         <div class="product-form__row">
             <label>middleName</label>
-        <input
-            class="product-form__input"
-            required="required"
-            name="middleName"
-            type="text"
-            minlength="2"
-            maxlength="10"
-            placeholder=" "
-            [(ngModel)]="policyHolder.middleName">
+            <input
+                class="product-form__input"
+                required="required"
+                name="middleName"
+                type="text"
+                minlength="2"
+                maxlength="10"
+                placeholder=" "
+                [(ngModel)]="policyHolder.middleName"
+            >
         </div>
         <div class="product-form__row">
             <label>date of Birth</label>
@@ -50,7 +52,8 @@
                     matInput
                     [matDatepicker]="picker"
                     (dateChange)="dateChange($event)"
-                    [(ngModel)]="policyHolder.dob">
+                    [(ngModel)]="policyHolder.dob"
+                >
                 <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
@@ -58,42 +61,45 @@
         </div>
         <div class="product-form__row">
             <label>phone</label>
-        <input
-            class="product-form__input"
-            required="required"
-            name="phone"
-            type="tel"
-            minlength="18"
-            maxlength="18"
-            prefix="+7"
-            mask="(000) 000-0000"
-            placeholder=" "
-            [(ngModel)]="policyHolder.phone">
+            <input
+                class="product-form__input"
+                required="required"
+                name="phone"
+                type="tel"
+                minlength="18"
+                maxlength="18"
+                prefix="+7"
+                mask="(000) 000-0000"
+                placeholder=" "
+                [(ngModel)]="policyHolder.phone"
+            >
         </div>
         <div class="product-form__row">
             <label>email</label>
-        <input
-            class="product-form__input"
-            required="required"
-            name="email"
-            type="email"
-            minlength="2"
-            maxlength="10"
-            placeholder=" "
-            [(ngModel)]="policyHolder.email" >
+            <input
+                class="product-form__input"
+                required="required"
+                name="email"
+                type="email"
+                minlength="2"
+                maxlength="10"
+                placeholder=" "
+                [(ngModel)]="policyHolder.email"
+            >
         </div>
         <div class="product-form__row">
             <label>city</label>
-        <input
-            class="product-form__input"
-            required="required"
-            name="city"
-            type="text"
-            minlength="2"
-            maxlength="10"
-            name="city"
-            placeholder=" "
-            [(ngModel)]="policyHolder.city">
+            <input
+                class="product-form__input"
+                required="required"
+                name="city"
+                type="text"
+                minlength="2"
+                maxlength="10"
+                name="city"
+                placeholder=" "
+                [(ngModel)]="policyHolder.city"
+            >
         </div>
     </div>
     <div>

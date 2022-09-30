@@ -16,6 +16,7 @@ export class CustomerDataComponent implements OnInit {
 
   programmName = 'optimal'; // программа по умолчанию
 
+  // захардкоренные значения
   objService = {
     service1: 'Устная правовая консультация',
     service2: 'Доверь переговоры юристу',
@@ -23,6 +24,7 @@ export class CustomerDataComponent implements OnInit {
     service4: 'Подача документов в соответствующие инстанции',
   }
 
+  // захардкоренные значения
   objPeriod = [
     {
       period1: '6 раз в год',
@@ -47,15 +49,25 @@ export class CustomerDataComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // localStorage.setItem('programmName', JSON.stringify(''));
-    this.programmName = JSON.parse(localStorage.getItem('programmName') || 'optimal'); // получаем выбранную программу из сторожа или по умолчанию
+    setTimeout(() => {
+      this.programmName = localStorage.getItem('programmName') || 'optimal'; // получаем выбранную программу из сторожа или по умолчанию
+    },1000);
+
+    console.log('this.programmName', this.programmName);
+    // this.programmName = 'optimal';
     this.getAvailablePrograms(); // передаем данные на сервер и выводим список программ из ответа + добавляем захардкоренные значения.
+    // this.installProgramm();
   }
 
   selectedProgramm(key: string) { // принимаем параметр передаваемый по клику
     this.programmName = key; // сравниваем значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
     localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
   }
+
+  /* installProgramm() {
+    // this.programmName = localStorage.getItem('programmName') || 'optimal';
+    this.programmName = 'optimal';
+  } */
 
   async getAvailablePrograms() {
     let register = {
