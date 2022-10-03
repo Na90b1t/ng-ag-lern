@@ -64,7 +64,7 @@ export class CalculationComponent implements OnInit {
       key: this.key,
       operation: 'contract.save',
       data: {
-        session: sessionStorage.getItem('session azaza') || '',
+        session: sessionStorage.getItem('session') || '',
         product: 'juridicalService',
         // documentCode: 'guid документа, если требуется пересохранение, иначе не передавать данный параметр',
         request: this.objRequest,
@@ -105,7 +105,7 @@ export class CalculationComponent implements OnInit {
       key: this.key,
       operation: 'contract.open',
       data: {
-        session: sessionStorage.getItem('session azaza') || '',
+        session: sessionStorage.getItem('session') || '',
         code: this.documentCode,
       }
     }

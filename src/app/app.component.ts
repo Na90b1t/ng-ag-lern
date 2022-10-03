@@ -10,11 +10,13 @@ import { DataService } from './data.service';
 export class AppComponent {
   session: any = '';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.checkSession();
+  }
 
   checkSession() {
-    this.session = sessionStorage.getItem('session azaza');
+    this.session = sessionStorage.getItem('session');
   }
 }

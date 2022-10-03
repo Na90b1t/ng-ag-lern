@@ -49,12 +49,7 @@ export class CustomerDataComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.programmName = localStorage.getItem('programmName') || 'optimal'; // получаем выбранную программу из сторожа или по умолчанию
-    },1000);
-
-    console.log('this.programmName', this.programmName);
-    // this.programmName = 'optimal';
+    this.programmName = JSON.parse(localStorage.getItem('programmName') || '"optimal"'); // получаем выбранную программу из сторожа или по умолчанию
     this.getAvailablePrograms(); // передаем данные на сервер и выводим список программ из ответа + добавляем захардкоренные значения.
     // this.installProgramm();
   }

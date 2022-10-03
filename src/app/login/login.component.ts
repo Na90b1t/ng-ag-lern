@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    localStorage.setItem('login azaza', JSON.stringify(''));
-    this.login = JSON.parse(localStorage.getItem('login azaza') || '');
-    console.log('this.login', this.login); // ? нет логина
+    setTimeout(() => 
+      this.login = JSON.parse(localStorage.getItem('login') || '')
+    );
   }
 
   loginSession() {
@@ -38,9 +38,9 @@ export class LoginComponent implements OnInit {
       key: this.key,
       operation: 'user.authorization',
       data: {
-        "login": this.login,
-        "password": this.password
-        }
+        login: this.login,
+        password: this.password,
+      },
     };
 
     const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
@@ -57,13 +57,11 @@ export class LoginComponent implements OnInit {
       let jsonResponse = await response;
       jsonResponse.json().then(azaza => {
         if(azaza.success) {
-          console.log('authorization response', azaza); // ответ на авторизацию.
-          console.log('authorization', azaza.success); // подтверждение авторизации.
-          localStorage.setItem('login azaza', JSON.stringify(authorization.data.login));
-          sessionStorage.setItem('session azaza', azaza.result.session);
-          this.session = sessionStorage.getItem('session azaza') || '';
-          this.password = ''; // сброс пароля после входа.
+          this.session = azaza?.result?.session;
+          sessionStorage.setItem('session', this.session);
           this.loginSession(); // передача события в родительский компонент.
+          localStorage.setItem('login', JSON.stringify(authorization.data.login));
+          this.password = ''; // сброс пароля после входа.
         } else {
           alert('Error:' + ' ' + azaza.error?.code);
         }
@@ -77,7 +75,9 @@ export class LoginComponent implements OnInit {
     let logout = {
       key: this.key,
       operation: 'user.logout',
-      data: {"session": sessionStorage.getItem('session azaza') || ''}
+      data: {
+        session: sessionStorage.getItem('session') || '',
+      },
     };
 
     const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
@@ -96,7 +96,7 @@ export class LoginComponent implements OnInit {
         if(azaza.success) {
           console.log('logout', azaza.success); // подтверждение разлогина.
           this.session = ''; // сброс сессии, поскольку был разлогин.
-          sessionStorage.removeItem('session azaza'); // очистка сессии из сторожа, поскольку был разлогин.
+          sessionStorage.removeItem('session'); // очистка сессии из сторожа, поскольку был разлогин.
         } else {
           alert('Error:' + ' ' + azaza.error?.code);
         }
