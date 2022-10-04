@@ -51,18 +51,12 @@ export class CustomerDataComponent implements OnInit {
   ngOnInit(): void {
     this.programmName = JSON.parse(localStorage.getItem('programmName') || '"optimal"'); // получаем выбранную программу из сторожа или по умолчанию
     this.getAvailablePrograms(); // передаем данные на сервер и выводим список программ из ответа + добавляем захардкоренные значения.
-    // this.installProgramm();
   }
 
   selectedProgramm(key: string) { // принимаем параметр передаваемый по клику
     this.programmName = key; // сравниваем значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
     localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
   }
-
-  /* installProgramm() {
-    // this.programmName = localStorage.getItem('programmName') || 'optimal';
-    this.programmName = 'optimal';
-  } */
 
   async getAvailablePrograms() {
     let register = {
@@ -89,8 +83,10 @@ export class CustomerDataComponent implements OnInit {
       json.json().then(azaza => {
         console.log('Ответ системы:', azaza);
         if(azaza.success) {
-          console.log('azaza.success', azaza.success);
+            console.log('azaza.success', azaza.success);
+            console.log('this.contractData', this.contractData);
           this.contractData = (azaza.result); // получаем список программ
+            console.log('this.contractData = (azaza.result)', this.contractData);
             console.log('this.contractData', Object.assign([], this.contractData)); // копируем обьект для логирования до его изменения
             
             for (let i = 0; i < this.contractData.length; i++) {

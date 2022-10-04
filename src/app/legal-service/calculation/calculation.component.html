@@ -9,9 +9,8 @@
                 type="text"
                 minlength="2"
                 maxlength="10"
-                [pattern]="rusPatterns"
-                mask="S{5}"
                 placeholder=" "
+                pattern="[А-Яа-яЁё]+"
                 [(ngModel)]="policyHolder.lastName"
             >
         </div>
@@ -33,11 +32,12 @@
             <label>middleName</label>
             <input
                 class="product-form__input"
-                required="required"
                 name="middleName"
                 type="text"
                 minlength="2"
                 maxlength="10"
+                [pattern]="rusPatterns"
+                mask="S{5}"
                 placeholder=" "
                 [(ngModel)]="policyHolder.middleName"
             >

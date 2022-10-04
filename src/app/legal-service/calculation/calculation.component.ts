@@ -21,20 +21,20 @@ export class CalculationComponent implements OnInit {
       // Данные программы не привязаны, пока не сделал их заполение из ответа.
       contractData:{  
           product:  {
-            code: 'optimal',
-            name: 'Оптимальный',
-            premium: 3000,
+            code: '',
+            name: '',
+            premium: 0,
           }
       },
       // Данные страхователя привязаны, но чтобы не вводить их руками оставляю заполенными
       policyHolder: {  
-          lastName: '',
-          firstName: 'Иван',
-          middleName: 'Иванович',
-          dob: '',
+          lastName: 'Киров',
+          firstName: 'Матвей',
+          middleName: '',
+          dob: '01.01.2000',
           phone: '89003334455',
           email: 'sj-smirnov@mail.ru',
-          city: 'NY',
+          city: 'Москва',
       }
     }
   }
@@ -47,6 +47,7 @@ export class CalculationComponent implements OnInit {
   };
 
   policyHolder = this.objRequest.content.policyHolder;
+  product = this.objRequest.content.contractData.product;
 
   @Input() session: any;
 
@@ -60,6 +61,15 @@ export class CalculationComponent implements OnInit {
   }
 
   async saveContract() {
+    this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
+    if(this.product.code === 'optimal') {
+      this.product.name = 'Оптимальный',
+      this.product.premium = 3000
+    } else {
+      this.product.name = 'Расширенный',
+      this.product.premium = 6000
+    }
+
     let save = {
       key: this.key,
       operation: 'contract.save',
@@ -71,12 +81,14 @@ export class CalculationComponent implements OnInit {
       }
     }
 
-    console.log('save', save); // данные + введенные пользователем т отправляемые на сервер
+    console.log('save', save); // данные + введенные пользователем и отправляемые на сервер
 
     const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
     formData.append('key', save.key);
     formData.append('operation', save.operation);
     formData.append('data', JSON.stringify(save.data));
+
+    console.log('const formData:', formData);
 
     let response = await fetch(this.requestUrl, {
       method: 'POST',
