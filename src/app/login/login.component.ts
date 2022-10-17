@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
     login = '';
     password = '';
     session = '';
-    key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f';
+    key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f'; // взято из АПИ
 
     private requestUrl = 'https://testportal2.agentology.ru/api/agentology/';
 
@@ -36,7 +36,8 @@ export class LoginComponent implements OnInit {
     async requestApi() {
         let authorization = {
             key: this.key,
-            operation: 'user.authorization',
+            operation: 'user.authorization', // взято из АПИ
+            // получаем от ввода пользователя
             data: {
                 login: this.login,
                 password: this.password,
@@ -54,8 +55,8 @@ export class LoginComponent implements OnInit {
         });
 
         if (response.ok) {
-            let jsonResponse = await response;
-            jsonResponse.json().then(azaza => {
+            let responseJson = await response;
+            responseJson.json().then(azaza => {
                 if (azaza.success) {
                     this.session = azaza?.result?.session;
                     sessionStorage.setItem('session', this.session);
@@ -91,8 +92,8 @@ export class LoginComponent implements OnInit {
         });
 
         if (response.ok) {
-            let json = await response;
-            json.json().then(azaza => {
+            let responseJson = await response;
+            responseJson.json().then(azaza => {
                 if (azaza.success) {
                     console.log('logout', azaza.success); // подтверждение разлогина.
                     this.session = ''; // сброс сессии, поскольку был разлогин.

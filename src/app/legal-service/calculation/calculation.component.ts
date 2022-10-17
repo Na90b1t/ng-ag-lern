@@ -12,7 +12,10 @@ export class CalculationComponent implements OnInit {
     key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f'; // ключ API
     documentCode = ''; // guid сохраненного документа,
     documentNumber = ''; // Номер договора
-    programmSelected: boolean | undefined;
+
+    options = {
+        autoHide: false,
+    }
 
     emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -46,14 +49,19 @@ export class CalculationComponent implements OnInit {
         mask: '+{7}(000)000-00-00'
     };
 
+    // сокращаем запись пути
     policyHolder = this.objRequest.content.policyHolder;
     product = this.objRequest.content.contractData.product;
 
     @Input() session: any;
+    @Input() programmSelected: any; // сюда прокину выбранную программу, чтобы потом ее передать в метод сейв
 
     constructor() { }
 
-    ngOnInit(): void {
+    ngOnInit(): void { 
+        console.log('programmSelected in calc', this.programmSelected);
+        console.log('this.programmSelected[0].code', this.programmSelected[0].code);
+        
     }
 
     dateChange($event: { target: { value: any; }; }) {
@@ -64,10 +72,10 @@ export class CalculationComponent implements OnInit {
         this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
         if (this.product.code === 'optimal') {
             this.product.name = 'Оптимальный',
-                this.product.premium = 3000
+            this.product.premium = 3000
         } else {
             this.product.name = 'Расширенный',
-                this.product.premium = 6000
+            this.product.premium = 6000
         }
 
         let save = {
@@ -96,8 +104,8 @@ export class CalculationComponent implements OnInit {
         });
 
         if (response.ok) {
-            let json = await response;
-            json.json().then(azaza => {
+            let responseJson = await response;
+            responseJson.json().then(azaza => {
                 if (azaza.success) {
                     console.log('Success save', azaza.success);
                     console.log('azaza', azaza);
@@ -135,8 +143,8 @@ export class CalculationComponent implements OnInit {
         });
 
         if (response.ok) {
-            let json = await response;
-            json.json().then(azaza => {
+            let responseJson = await response;
+            responseJson.json().then(azaza => {
                 if (azaza.success) {
                     console.log('Success open', azaza.success);
                     console.log('Success open', azaza);
