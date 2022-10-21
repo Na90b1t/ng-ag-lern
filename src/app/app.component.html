@@ -1,3 +1,5 @@
+<app-auth></app-auth>
+<app-output></app-output>
 <app-login (outputSession)="checkSession()"></app-login>
 <app-customer-data *ngIf="session" [session]="session" (outputProgrammSelected)="getProgramm()"></app-customer-data>
 <app-calculation *ngIf="session" [session]="session" [programmSelected]="programmSelected"></app-calculation>
