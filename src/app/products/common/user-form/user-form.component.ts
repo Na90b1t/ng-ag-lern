@@ -1,15 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/service/auth.service';
 // import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @Component({
-    selector: 'app-calculation',
-    templateUrl: './calculation.component.html',
-    styleUrls: ['./calculation.component.scss']
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.scss']
 })
-export class CalculationComponent implements OnInit {
-
-    private requestUrl = 'https://testportal2.agentology.ru/api/agentology/'; // адрес сервера для взаимодествия с помощью API
-    key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f'; // ключ API
+export class UserFormComponent implements OnInit {
+    private readonly key: string;
+    private readonly operation: string;
+    private readonly requestUrl: string;
     documentCode = ''; // guid сохраненного документа,
     documentNumber = ''; // Номер договора
 
@@ -56,7 +57,12 @@ export class CalculationComponent implements OnInit {
     @Input() session: any;
     @Input() programmSelected: any; // сюда прокину выбранную программу, чтобы потом ее передать в метод сейв
 
-    constructor() { }
+    constructor(private authService: AuthService) {
+      this.key = this.authService.key;
+      this.operation = this.authService.operationRegister;
+      this.requestUrl = this.authService.requestUrl;
+      // this.session = this.authService.session;
+    }
 
     ngOnInit(): void { 
         console.log('programmSelected in calc', this.programmSelected);

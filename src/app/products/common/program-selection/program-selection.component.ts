@@ -1,14 +1,15 @@
 import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
-    selector: 'app-customer-data',
-    templateUrl: './customer-data.component.html',
-    styleUrls: ['./customer-data.component.scss']
+    selector: 'app-program-selection',
+    templateUrl: './program-selection.component.html',
+    styleUrls: ['./program-selection.component.scss']
 })
-export class CustomerDataComponent implements OnInit {
-    key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f'; // ключ API
-
-    private requestUrl = 'https://testportal2.agentology.ru/api/agentology/'; // адрес сервера для взаимодествия с помощью API
+export class ChoiceProgrammComponent implements OnInit {
+    private readonly key: string;
+    private readonly operation: string;
+    private readonly requestUrl: string;
 
     contractData: any; // объект с массивом доступных программ
 
@@ -47,7 +48,12 @@ export class CustomerDataComponent implements OnInit {
     @Input() session: any;
         @Output() outputProgrammSelected: EventEmitter<any> = new EventEmitter(); // создали событие для получения данных в родительском компоненте
 
-    constructor() { }
+    constructor(private authService: AuthService) {
+        this.key = this.authService.key;
+        this.operation = this.authService.operationRegister;
+        this.requestUrl = this.authService.requestUrl;
+        this.session = this.authService.session;
+    }
 
     ngOnInit(): void {
         this.programmName = JSON.parse(localStorage.getItem('programmName') || '"optimal"'); // получаем выбранную программу из сторожа или по умолчанию
@@ -64,7 +70,7 @@ export class CustomerDataComponent implements OnInit {
     async getAvailablePrograms() {
         let register = {
             key: this.key,
-            operation: 'register.get',
+            operation: this.operation,
             data: {
                 register: 'juridicalService',
             },

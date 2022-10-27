@@ -1,17 +1,19 @@
 import { Component, Input } from '@angular/core';
-import { DataService } from './data.service';
+import { AuthService } from './service/auth.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
-    providers: [DataService]
+    providers: [AuthService]
 })
 export class AppComponent {
-    session: any = '';
+    public session: string | null;
     @Input() programmSelected: any;
 
-    constructor() { }
+    constructor(private authService: AuthService) {
+        this.session = this.authService.session;
+    }
 
     ngOnInit(): void {
         this.checkSession();

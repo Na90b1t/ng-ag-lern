@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
-import { OutputComponent } from './output/output.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
     declarations: [
         AuthComponent,
-        OutputComponent,
+        SignInComponent,
     ],
     imports: [
         CommonModule,
+        FormsModule,
     ],
     exports: [
         AuthComponent,
-        OutputComponent,
+        SignInComponent,
     ]
 })
 export class AuthModule { }

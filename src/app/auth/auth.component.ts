@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
     template: `<label>{{title}}</label>`,
 })
 export class AuthComponent {
-    title = 'app-auth';
+    title = '';
 }

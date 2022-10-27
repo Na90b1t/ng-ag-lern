@@ -1,26 +1,27 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { DataService } from '../data.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    selector: 'app-sign-in',
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.scss']
 })
 
-export class LoginComponent implements OnInit {
+export class SignInComponent implements OnInit {
     login = '';
     password = '';
     session = '';
-    key = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f'; // взято из АПИ
-
-    private requestUrl = 'https://testportal2.agentology.ru/api/agentology/';
-
-    public exampleUsersService: Array<any>;
+    
+    private readonly key: string;
+    private readonly operation: string;
+    private readonly requestUrl: string;
 
     @Output() outputSession: EventEmitter<any> = new EventEmitter(); // передаем сессию для отображения компонентов
 
-    constructor(private dataService: DataService) {
-        this.exampleUsersService = this.dataService.getData();
+    constructor(private authService: AuthService) {
+        this.key = this.authService.key;
+        this.operation = this.authService.operationAuth;
+        this.requestUrl = this.authService.requestUrl;
     }
 
     ngOnInit(): void {
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
     async requestApi() {
         let authorization = {
             key: this.key,
-            operation: 'user.authorization', // взято из АПИ
+            operation: this.operation,
             // получаем от ввода пользователя
             data: {
                 login: this.login,
@@ -58,6 +59,7 @@ export class LoginComponent implements OnInit {
             let responseJson = await response;
             responseJson.json().then(azaza => {
                 if (azaza.success) {
+                    console.log('azaza.success', azaza.success);
                     this.session = azaza?.result?.session;
                     sessionStorage.setItem('session', this.session);
                     this.loginSession(); // передача события в родительский компонент.
