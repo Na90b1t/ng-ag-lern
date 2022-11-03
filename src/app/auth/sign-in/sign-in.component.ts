@@ -11,6 +11,7 @@ export class SignInComponent implements OnInit {
     login = '';
     password = '';
     session = '';
+    // public session: string | null = '';
     
     private readonly key: string;
     private readonly operation: string;

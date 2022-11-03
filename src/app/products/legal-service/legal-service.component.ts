@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-legal-service',
-  templateUrl: './legal-service.component.html',
-  styleUrls: ['./legal-service.component.scss']
+    selector: 'app-legal-service',
+    templateUrl: './legal-service.component.html',
+    styleUrls: ['./legal-service.component.scss']
 })
 export class LegalServiceComponent implements OnInit {
 
-  constructor() { }
+    @Input() session: any;
 
-  ngOnInit(): void {
-  }
+    constructor() { }
+
+    ngOnInit(): void {
+    }
 
 }

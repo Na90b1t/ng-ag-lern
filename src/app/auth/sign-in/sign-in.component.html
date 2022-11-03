@@ -1,27 +1,29 @@
-<form>
-    <div class="login-form" *ngIf="!session; else elseBlock">
-        <label>Login</label>
-        <input
-            required="required"
-            name="email_login"
-            type="email"
-            inputmode="email"
-            minlength="10"
-            maxlength="50"
-            [(ngModel)]="login"
-        >
-        <label>Password</label>
-        <input
-            required="required"
-            name="password"
-            type="password"
-            minlength="6"
-            maxlength="24"
-            [(ngModel)]="password"
-        >
-        <button (click)="requestApi()">Enter</button>
-    </div>
-    <ng-template #elseBlock>
-        <button (click)="logOut()">log out</button>
-    </ng-template>
-</form>
+<div class="wrap">
+    <form>
+        <div class="login-form" *ngIf="!session; else elseBlock">
+            <label>Login</label>
+            <input
+                required="required"
+                name="email_login"
+                type="email"
+                inputmode="email"
+                minlength="10"
+                maxlength="50"
+                [(ngModel)]="login"
+            >
+            <label>Password</label>
+            <input
+                required="required"
+                name="password"
+                type="password"
+                minlength="6"
+                maxlength="24"
+                [(ngModel)]="password"
+            >
+            <button (click)="requestApi()">Enter</button>
+        </div>
+        <ng-template #elseBlock>
+            <button (click)="logOut()">log out</button>
+        </ng-template>
+    </form>
+</div>

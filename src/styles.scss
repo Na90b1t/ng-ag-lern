@@ -4,4 +4,13 @@
     box-sizing: border-box;
 }
 
-body { min-height: 100vh;margin: 0; padding: 20px; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { min-height: 100vh; margin: 0; padding: 0 20px; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid black;
+}

@@ -12,6 +12,8 @@ export class AuthService {
     public readonly operationContract: string = 'contract.save';
 
     public readonly session: string; // 
+
+    public readonly title: string = 'Юридический сервис';
     
     constructor() { 
         this.session = sessionStorage.getItem('session') || '';

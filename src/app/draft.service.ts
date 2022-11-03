@@ -28,7 +28,7 @@ export class DraftService {
         // sessionStorage.setItem('session-service', this.session);
     }
 
-/*  checkSession() {
+/*  getSession() {
         this.session = sessionStorage.getItem('session');
     }
 */

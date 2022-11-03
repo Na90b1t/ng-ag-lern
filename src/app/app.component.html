@@ -1,6 +1,6 @@
 <app-auth></app-auth>
-<app-sign-in (outputSession)="checkSession()"></app-sign-in>
-<app-legal-service></app-legal-service>
+<app-sign-in (outputSession)="getSession()"></app-sign-in>
+<app-legal-service *ngIf="session" [session]="session"></app-legal-service>
 
 <!-- <app-draft-scroll></app-draft-scroll> -->
 <!-- <app-draft-user></app-draft-user> -->

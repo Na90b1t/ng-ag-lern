@@ -16,12 +16,12 @@ export class AppComponent {
     }
 
     ngOnInit(): void {
-        this.checkSession();
+        this.getSession();
 
         this.getProgramm();
     }
 
-    checkSession() {
+    getSession() {
         this.session = sessionStorage.getItem('session');
     }
 

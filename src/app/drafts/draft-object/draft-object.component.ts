@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-draft-object',
-  templateUrl: './draft-object.component.html',
-  styleUrls: ['./draft-object.component.scss']
+    selector: 'app-draft-object',
+    templateUrl: './draft-object.component.html',
+    styleUrls: ['./draft-object.component.scss']
 })
 export class DraftObjectComponent implements OnInit {
 

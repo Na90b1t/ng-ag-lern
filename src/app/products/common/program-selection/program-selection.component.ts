@@ -1,58 +1,39 @@
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthService} from 'src/app/service/auth.service';
+import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
 @Component({
     selector: 'app-program-selection',
     templateUrl: './program-selection.component.html',
     styleUrls: ['./program-selection.component.scss']
 })
-export class ChoiceProgrammComponent implements OnInit {
+export class ProgramSelectionComponent implements OnInit {
     private readonly key: string;
     private readonly operation: string;
     private readonly requestUrl: string;
 
-    contractData: any; // объект с массивом доступных программ
-
-    programmName = 'optimal'; // программа по умолчанию
-
-    programmSelected: object = {};
-
     // захардкоренные значения
-    objService = {
-        service1: 'Устная правовая консультация',
-        service2: 'Доверь переговоры юристу',
-        service3: 'Звонок юриста от имени клиента',
-        service4: 'Подача документов в соответствующие инстанции',
-    }
+    private readonly objService: Object;
+    private readonly objPeriod: Object[];
 
-    // захардкоренные значения
-    objPeriod = [
-        {
-            period1: '6 раз в год',
-            period2: '2 раза в год',
-            period3: '1 раз в год',
-            period4: '-',
-        },
-        {
-            period1: 'Безлимитно',
-            period2: '4 раз в год',
-            period3: 'Безлимитно',
-            period4: '4 раз в год',
-        }
-    ]
+    contractData: any; // объект для получения данных с сервера
+
+    programmName: string = 'optimal'; // программа по умолчанию
 
     // maskOptions = {
     //   mask: '+{7}(000)000-00-00'
     // };
 
-    @Input() session: any;
-        @Output() outputProgrammSelected: EventEmitter<any> = new EventEmitter(); // создали событие для получения данных в родительском компоненте
+        // ? @Output() outputProgrammSelected: EventEmitter<any> = new EventEmitter(); // создали событие для получения данных в родительском компоненте
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService, private juridicalServiceService: JuridicalServiceService) {
         this.key = this.authService.key;
         this.operation = this.authService.operationRegister;
         this.requestUrl = this.authService.requestUrl;
-        this.session = this.authService.session;
+
+        // захардкоренные значения
+        this.objService = this.juridicalServiceService.objService;
+        this.objPeriod = this.juridicalServiceService.objPeriod;
     }
 
     ngOnInit(): void {
@@ -62,9 +43,9 @@ export class ChoiceProgrammComponent implements OnInit {
     }
 
     selectedProgramm(key: string) { // принимаем параметр передаваемый по клику
-            this.outputProgrammSelected.emit(); // вызываем событие для выбора программы в родительском компоненте
+            // ? this.outputProgrammSelected.emit(); // вызываем событие для выбора программы в родительском компоненте
         this.programmName = key; // сравниваем значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
-        localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
+        // localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
     }
 
     async getAvailablePrograms() {
@@ -90,14 +71,17 @@ export class ChoiceProgrammComponent implements OnInit {
         if (response.ok) {
             let responseJson = await response;
             responseJson.json().then(azaza => {
-                console.log('Ответ системы azaza:', azaza);
+                console.log('Ответ системы azaza:', typeof azaza);
                 if (azaza.success) {
                     console.log('azaza.success', azaza.success);
                     console.log('this.contractData', this.contractData); // наша переменная для списка программ, в которой пока ничего нет (undifined).
-                    this.contractData = azaza.result; // получаем список программ
-                    console.log('this.contractData = azaza.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
-                    console.log('this.contractData', Object.assign([], this.contractData)); // копируем обьект для логирования, до его изменения.
 
+                    this.contractData = azaza.result; // получаем список программ
+
+                    console.log('this.contractData = azaza.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
+                    console.log('this.contractData before update', Object.assign([], this.contractData)); // копируем обьект для логирования, до его изменения.
+
+                    // тут мы каждому элементу (объекту) в массиве, добавляем данные из объектов, чтобы дополнить данные из списка програм, которые должны были по хорошему приходить с сервера.
                     for (let i = 0; i < this.contractData.length; i++) {
                         this.contractData[i] = {
                             ...this.contractData[i],
@@ -105,14 +89,9 @@ export class ChoiceProgrammComponent implements OnInit {
                             ...this.objPeriod[i],
                         };
                     }
-
                     console.log('update contractData', this.contractData);
 
-                    this.programmSelected = this.contractData;
-
-                    console.log('this.programmSelected', this.programmSelected);
-
-                        localStorage.setItem('programmSelected', JSON.stringify(this.programmSelected)); // сохраяем все данные программы в сторож, чтобы потом СРАЗУ использовать в друггом компоненте без лишних действий.
+                    localStorage.setItem('programmSelected', JSON.stringify(this.contractData)); // сохраняем все данные программы в сторож, чтобы потом СРАЗУ использовать в другом компоненте без лишних действий.
 
                 } else {
                     console.log('azaza.success:' + ' ' + azaza.success);

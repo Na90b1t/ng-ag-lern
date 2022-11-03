@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgramSelectionComponent } from './program-selection.component';
+import { HeaderProductComponent } from './header-product.component';
 
 @NgModule({
     declarations: [
-        ProgramSelectionComponent
+        HeaderProductComponent
     ],
     imports: [
         CommonModule
     ],
     exports: [
-        ProgramSelectionComponent
-    ]
+        HeaderProductComponent,
+]
 })
-export class ProgramSelectionModule { }
+export class HeaderProductModule { }
