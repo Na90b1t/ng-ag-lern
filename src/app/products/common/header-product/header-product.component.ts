@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
@@ -39,10 +39,7 @@ export class HeaderProductComponent implements OnInit {
     }
 
     // сокращаем запись пути
-    policyHolder = this.objRequest.content.policyHolder;
     product = this.objRequest.content.contractData.product;
-
-    @Input() programmSelected: any; // сюда прокину выбранную программу, чтобы потом ее передать в метод сейв
 
     constructor(private authService: AuthService) {
         this.title = this.authService.title;
@@ -51,13 +48,11 @@ export class HeaderProductComponent implements OnInit {
         this.requestUrl = this.authService.requestUrl;
     }
 
-    ngOnInit(): void {
-        console.log('programmSelected in calc', this.programmSelected);
-        // console.log('this.programmSelected[0].code', this.programmSelected[0].code);
-    }
+    ngOnInit(): void {}
 
     async saveContract() {
         this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
+
         if (this.product.code === 'optimal') {
             this.product.name = 'Оптимальный',
             this.product.premium = 3000

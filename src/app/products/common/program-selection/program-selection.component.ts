@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService} from 'src/app/service/auth.service';
 import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
@@ -20,12 +20,6 @@ export class ProgramSelectionComponent implements OnInit {
 
     programmName: string = 'optimal'; // программа по умолчанию
 
-    // maskOptions = {
-    //   mask: '+{7}(000)000-00-00'
-    // };
-
-        // ? @Output() outputProgrammSelected: EventEmitter<any> = new EventEmitter(); // создали событие для получения данных в родительском компоненте
-
     constructor(private authService: AuthService, private juridicalServiceService: JuridicalServiceService) {
         this.key = this.authService.key;
         this.operation = this.authService.operationRegister;
@@ -37,15 +31,14 @@ export class ProgramSelectionComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.programmName = JSON.parse(localStorage.getItem('programmName') || '"optimal"'); // получаем выбранную программу из сторожа или по умолчанию
-            // this.programmName = JSON.parse(localStorage.getItem('programmSelected') || '"optimal"'); // получаем выбранную программу из сторожа или по умолчанию
+        this.programmName = JSON.parse(localStorage.getItem('programmName') || '"optimal"'); // получаем имя выбранной программы из сторожа или по умолчанию
         this.getAvailablePrograms(); // передаем данные на сервер и выводим список программ из ответа + добавляем захардкоренные значения.
     }
 
+    // метод нужен только для смены значения выбранной программы, при первом запуске оно возмется из переменой со значением берущимся из сторожа или по умолчанию 
     selectedProgramm(key: string) { // принимаем параметр передаваемый по клику
-            // ? this.outputProgrammSelected.emit(); // вызываем событие для выбора программы в родительском компоненте
-        this.programmName = key; // сравниваем значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
-        // localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
+        this.programmName = key; // заносим название программы, чтобы в шаблоне мы сравнивали значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
+        localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
     }
 
     async getAvailablePrograms() {
@@ -71,7 +64,7 @@ export class ProgramSelectionComponent implements OnInit {
         if (response.ok) {
             let responseJson = await response;
             responseJson.json().then(azaza => {
-                console.log('Ответ системы azaza:', typeof azaza);
+                console.log('Ответ системы azaza:', typeof azaza, azaza);
                 if (azaza.success) {
                     console.log('azaza.success', azaza.success);
                     console.log('this.contractData', this.contractData); // наша переменная для списка программ, в которой пока ничего нет (undifined).
@@ -81,7 +74,7 @@ export class ProgramSelectionComponent implements OnInit {
                     console.log('this.contractData = azaza.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
                     console.log('this.contractData before update', Object.assign([], this.contractData)); // копируем обьект для логирования, до его изменения.
 
-                    // тут мы каждому элементу (объекту) в массиве, добавляем данные из объектов, чтобы дополнить данные из списка програм, которые должны были по хорошему приходить с сервера.
+                    // тут мы каждому элементу (объекту) в массиве, добавляем данные из объектов, чтобы дополнить данные из списка программ, которые должны были по хорошему приходить с сервера.
                     for (let i = 0; i < this.contractData.length; i++) {
                         this.contractData[i] = {
                             ...this.contractData[i],
@@ -90,9 +83,6 @@ export class ProgramSelectionComponent implements OnInit {
                         };
                     }
                     console.log('update contractData', this.contractData);
-
-                    localStorage.setItem('programmSelected', JSON.stringify(this.contractData)); // сохраняем все данные программы в сторож, чтобы потом СРАЗУ использовать в другом компоненте без лишних действий.
-
                 } else {
                     console.log('azaza.success:' + ' ' + azaza.success);
                 }

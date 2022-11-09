@@ -9,9 +9,7 @@ export class LegalServiceComponent implements OnInit {
 
     @Input() session: any;
 
-    constructor() { }
+    constructor() {}
 
-    ngOnInit(): void {
-    }
-
+    ngOnInit(): void {}
 }

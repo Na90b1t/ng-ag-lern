@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 // import { NgxMaskModule, IConfig } from 'ngx-mask';
 
@@ -50,11 +50,8 @@ export class UserFormComponent implements OnInit {
         mask: '+{7}(000)000-00-00'
     };
 
-    // сокращаем запись пути
+    // сокращаем запись пути (использую в шаблоне)
     policyHolder = this.objRequest.content.policyHolder;
-    // product = this.objRequest.content.contractData.product;
-
-    // @Input() programmSelected: any; // сюда прокину выбранную программу, чтобы потом ее передать в метод сейв
 
     constructor(private authService: AuthService) {
         this.key = this.authService.key;
@@ -62,11 +59,7 @@ export class UserFormComponent implements OnInit {
         this.requestUrl = this.authService.requestUrl;
     }
 
-    ngOnInit(): void { 
-        // console.log('programmSelected in calc', this.programmSelected);
-        // console.log('this.programmSelected[0].code', this.programmSelected[0].code);
-        
-    }
+    ngOnInit(): void {}
 
     dateChange($event: { target: { value: any; }; }) {
         console.log('dateChange($event)', $event.target.value);
