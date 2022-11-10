@@ -11,8 +11,6 @@ export class UserFormComponent implements OnInit {
     private readonly key: string;
     private readonly operation: string;
     private readonly requestUrl: string;
-    documentCode = ''; // guid сохраненного документа,
-    documentNumber = ''; // Номер договора
 
     options = {
         autoHide: false,
@@ -30,10 +28,11 @@ export class UserFormComponent implements OnInit {
                     premium: 0,
                 }
             },
+
             // Данные страхователя привязаны, но чтобы не вводить их руками оставляю заполенными
             policyHolder: {
-                lastName: 'Киров',
-                firstName: 'Матвей',
+                lastName: 'Рогов',
+                firstName: 'Леонид',
                 middleName: '',
                 dob: '01.01.2000',
                 phone: '89003334455',
@@ -53,15 +52,29 @@ export class UserFormComponent implements OnInit {
     // сокращаем запись пути (использую в шаблоне)
     policyHolder = this.objRequest.content.policyHolder;
 
+    // localUserData = {};
+
     constructor(private authService: AuthService) {
         this.key = this.authService.key;
-        this.operation = this.authService.operationRegister;
+        this.operation = this.authService.registerGet;
         this.requestUrl = this.authService.requestUrl;
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.getUserData();
+    }
 
     dateChange($event: { target: { value: any; }; }) {
         console.log('dateChange($event)', $event.target.value);
+    }
+
+    saveUserData() {
+        localStorage.setItem('userData', JSON.stringify(this.objRequest)); // сохраняем ключ по которому будем определять выбранную программу 
+        this.getUserData();
+    }
+
+    getUserData() {
+        this.objRequest = JSON.parse(localStorage.getItem('userData') || '" "');
+        console.log('userData in user-form', this.objRequest);
     }
 }

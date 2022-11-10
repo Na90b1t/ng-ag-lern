@@ -22,7 +22,7 @@ export class ProgramSelectionComponent implements OnInit {
 
     constructor(private authService: AuthService, private juridicalServiceService: JuridicalServiceService) {
         this.key = this.authService.key;
-        this.operation = this.authService.operationRegister;
+        this.operation = this.authService.registerGet;
         this.requestUrl = this.authService.requestUrl;
 
         // захардкоренные значения

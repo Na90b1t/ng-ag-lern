@@ -13,11 +13,11 @@ export class HeaderProductComponent implements OnInit {
     public readonly title: string;
 
     documentCode = ''; // guid сохраненного документа,
-    documentNumber = ''; // Номер договора
+    // documentNumber = ''; // Номер договора (не используется)
 
     objRequest = { // Структура объекта request
         content: {
-            // Данные программы не привязаны, пока не сделал их заполение из ответа.
+            // Данные программы не привязаны, пока не сделал их заполение из ответа, заполняю их тут в зависимости от выбора программы
             contractData: {
                 product: {
                     code: '',
@@ -30,7 +30,7 @@ export class HeaderProductComponent implements OnInit {
                 lastName: 'Киров',
                 firstName: 'Матвей',
                 middleName: '',
-                dob: '01.01.2000',
+                dob: '01.01.2001',
                 phone: '89003334455',
                 email: 'sj-smirnov@mail.ru',
                 city: 'Москва',
@@ -44,7 +44,7 @@ export class HeaderProductComponent implements OnInit {
     constructor(private authService: AuthService) {
         this.title = this.authService.title;
         this.key = this.authService.key;
-        this.operation = this.authService.operationRegister;
+        this.operation = this.authService.contractSave;
         this.requestUrl = this.authService.requestUrl;
     }
 
@@ -52,6 +52,9 @@ export class HeaderProductComponent implements OnInit {
 
     async saveContract() {
         this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
+        this.objRequest = JSON.parse(localStorage.getItem('userData') || '" "');
+
+        console.log('userData', this.objRequest);
 
         if (this.product.code === 'optimal') {
             this.product.name = 'Оптимальный',
@@ -63,7 +66,7 @@ export class HeaderProductComponent implements OnInit {
 
         let save = {
             key: this.key,
-            operation: 'contract.save',
+            operation: this.operation,
             data: {
                 session: sessionStorage.getItem('session') || '',
                 product: 'juridicalService',

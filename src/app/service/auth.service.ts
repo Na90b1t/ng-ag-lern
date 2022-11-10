@@ -8,8 +8,8 @@ export class AuthService {
     public readonly requestUrl: string = 'https://testportal2.agentology.ru/api/agentology/';
     public readonly key: string = 'a9fb7d0b-d818-4e24-d499-dda5cb02dc6f';
     public readonly operationAuth: string = 'user.authorization';
-    public readonly operationRegister: string = 'register.get';
-    public readonly operationContract: string = 'contract.save';
+    public readonly registerGet: string = 'register.get';
+    public readonly contractSave: string = 'contract.save';
 
     public readonly session: string; // 
 
