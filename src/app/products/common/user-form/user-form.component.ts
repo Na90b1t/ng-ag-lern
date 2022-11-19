@@ -45,8 +45,7 @@ export class UserFormComponent implements OnInit {
     };
 
     // сокращаем запись пути (использую в шаблоне)
-    policyHolder = this.objRequest.content.policyHolder;
-
+    policyHolder: any = {}; // для сокращения записи в дальнейшем
     constructor() {}
 
     ngOnInit(): void {
@@ -63,7 +62,8 @@ export class UserFormComponent implements OnInit {
     }
 
     getUserData() {
-        this.objRequest = JSON.parse(localStorage.getItem('userData') || '" "');
+        this.objRequest = JSON.parse(localStorage.getItem('userData') || JSON.stringify(this.objRequest)); // стрингифицирую объект чтобы не сломать парсер и передаю его самого чтобы он всегда был по дефолту (примерно так)
+        this.policyHolder = this.objRequest.content.policyHolder; // сокращение пути переносится сюда, потому что если это был бы выше, то объект перепишется, а привязка осталась бы к старому
         console.log('getUserData objRequest', this.objRequest);
     }
 }
