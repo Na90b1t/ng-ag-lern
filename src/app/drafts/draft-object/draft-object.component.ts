@@ -28,24 +28,24 @@ export class DraftObjectComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        console.log('this.user {}', this.user);
+        // console.log('this.user {}', this.user);
         
-        console.log('this.abuser', this.abuser);
+        // console.log('this.abuser', this.abuser);
         
         this.cloneObject();
 
         this.abuser.name = 'abuser';
-        console.log('this.abuser', this.abuser);
-        console.log('this.user {}', this.user);
+        // console.log('this.abuser', this.abuser);
+        // console.log('this.user {}', this.user);
 
         this.abuser.game = 'abuser';
-        console.log('this.abuser', this.abuser);
+        // console.log('this.abuser', this.abuser);
         
-        console.log('this.heapEmpty', this.heapEmpty);
-        console.log('this.heapEmpty', this.heapEmpty, this.isEmpty(this.heapEmpty));
+        // console.log('this.heapEmpty', this.heapEmpty);
+        // console.log('this.heapEmpty', this.heapEmpty, this.isEmpty(this.heapEmpty));
         Object.assign(this.heapEmpty, this.user, this.abuser);
         Object.assign(this.heapFull, this.user, this.abuser);
-        console.log('this.heapFull', this.heapFull);
+        // console.log('this.heapFull', this.heapFull);
     }
 
     isEmpty(obj: any) {
@@ -65,6 +65,6 @@ export class DraftObjectComponent implements OnInit {
             // }
         }
 
-        console.log('this.clone', this.clone);
+        // console.log('this.clone', this.clone);
     }
 }

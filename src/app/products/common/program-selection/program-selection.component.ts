@@ -59,20 +59,20 @@ export class ProgramSelectionComponent implements OnInit {
             method: 'POST',
             body: formData
         });
-        console.log('response', response);
+        // console.log('response', response);
 
         if (response.ok) {
             let responseJson = await response;
             responseJson.json().then(azaza => {
-                console.log('Ответ системы azaza:', typeof azaza, azaza);
+                // console.log('Ответ системы azaza:', typeof azaza, azaza);
                 if (azaza.success) {
-                    console.log('azaza.success', azaza.success);
-                    console.log('this.contractData', this.contractData); // наша переменная для списка программ, в которой пока ничего нет (undifined).
+                    // console.log('azaza.success', azaza.success);
+                    // console.log('this.contractData', this.contractData); // наша переменная для списка программ, в которой пока ничего нет (undifined).
 
                     this.contractData = azaza.result; // получаем список программ
 
-                    console.log('this.contractData = azaza.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
-                    console.log('this.contractData before update', Object.assign([], this.contractData)); // копируем обьект для логирования, до его изменения.
+                    // console.log('this.contractData = azaza.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
+                    // console.log('this.contractData before update', Object.assign([], this.contractData)); // копируем обьект для логирования, до его изменения.
 
                     // тут мы каждому элементу (объекту) в массиве, добавляем данные из объектов, чтобы дополнить данные из списка программ, которые должны были по хорошему приходить с сервера.
                     for (let i = 0; i < this.contractData.length; i++) {
@@ -82,13 +82,13 @@ export class ProgramSelectionComponent implements OnInit {
                             ...this.objPeriod[i],
                         };
                     }
-                    console.log('update contractData', this.contractData);
+                    // console.log('update contractData', this.contractData);
                 } else {
-                    console.log('azaza.success:' + ' ' + azaza.success);
+                    // console.log('azaza.success:' + ' ' + azaza.success);
                 }
             });
         } else {
-            console.log('Ошибка HTTP: ' + response.status);
+            // console.log('Ошибка HTTP: ' + response.status);
         }
     }
 }

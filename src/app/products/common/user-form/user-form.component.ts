@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
 // import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @Component({
@@ -8,17 +7,13 @@ import { AuthService } from 'src/app/service/auth.service';
     styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-    private readonly key: string;
-    private readonly operation: string;
-    private readonly requestUrl: string;
-
     options = {
         autoHide: false,
     }
 
     emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    objRequest = { // Структура объекта request
+    objRequest: any = { // Структура объекта request
         content: {
             // Данные программы не привязаны, пока не сделал их заполение из ответа.
             contractData: {
@@ -31,7 +26,7 @@ export class UserFormComponent implements OnInit {
 
             // Данные страхователя привязаны, но чтобы не вводить их руками оставляю заполенными
             policyHolder: {
-                lastName: 'Рогов',
+                lastName: '',
                 firstName: 'Леонид',
                 middleName: '',
                 dob: '01.01.2000',
@@ -52,16 +47,10 @@ export class UserFormComponent implements OnInit {
     // сокращаем запись пути (использую в шаблоне)
     policyHolder = this.objRequest.content.policyHolder;
 
-    // localUserData = {};
-
-    constructor(private authService: AuthService) {
-        this.key = this.authService.key;
-        this.operation = this.authService.registerGet;
-        this.requestUrl = this.authService.requestUrl;
-    }
+    constructor() {}
 
     ngOnInit(): void {
-        this.getUserData();
+        setTimeout(() =>  this.getUserData());
     }
 
     dateChange($event: { target: { value: any; }; }) {
@@ -69,12 +58,12 @@ export class UserFormComponent implements OnInit {
     }
 
     saveUserData() {
-        localStorage.setItem('userData', JSON.stringify(this.objRequest)); // сохраняем ключ по которому будем определять выбранную программу 
-        this.getUserData();
+        console.log('saveUserData objRequest', this.objRequest);
+        localStorage.setItem('userData', JSON.stringify(this.objRequest)); // сохраняем объект с выбранной программой
     }
 
     getUserData() {
         this.objRequest = JSON.parse(localStorage.getItem('userData') || '" "');
-        console.log('userData in user-form', this.objRequest);
+        console.log('getUserData objRequest', this.objRequest);
     }
 }

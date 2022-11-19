@@ -60,7 +60,7 @@ export class SignInComponent implements OnInit {
             let responseJson = await response;
             responseJson.json().then(azaza => {
                 if (azaza.success) {
-                    console.log('azaza.success', azaza.success);
+                    // console.log('azaza.success', azaza.success);
                     this.session = azaza?.result?.session;
                     sessionStorage.setItem('session', this.session);
                     this.loginSession(); // передача события в родительский компонент.
@@ -98,7 +98,7 @@ export class SignInComponent implements OnInit {
             let responseJson = await response;
             responseJson.json().then(azaza => {
                 if (azaza.success) {
-                    console.log('logout', azaza.success); // подтверждение разлогина.
+                    // console.log('logout', azaza.success); // подтверждение разлогина.
                     this.session = ''; // сброс сессии, поскольку был разлогин.
                     sessionStorage.removeItem('session'); // очистка сессии из сторожа, поскольку был разлогин.
                 } else {

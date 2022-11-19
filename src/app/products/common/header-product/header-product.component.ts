@@ -54,7 +54,7 @@ export class HeaderProductComponent implements OnInit {
         this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
         this.objRequest = JSON.parse(localStorage.getItem('userData') || '" "');
 
-        console.log('userData', this.objRequest);
+        // console.log('userData', this.objRequest);
 
         if (this.product.code === 'optimal') {
             this.product.name = 'Оптимальный',
@@ -71,18 +71,19 @@ export class HeaderProductComponent implements OnInit {
                 session: sessionStorage.getItem('session') || '',
                 product: 'juridicalService',
                 // documentCode: 'guid документа, если требуется пересохранение, иначе не передавать данный параметр',
-                request: this.objRequest,
+                // request:  sessionStorage.getItem('session') || '',
+                request:  localStorage.getItem('sesuserDatasion') || '',
             }
         }
 
-        console.log('save', save); // данные + введенные пользователем и отправляемые на сервер
+        // console.log('save', save); // данные + введенные пользователем и отправляемые на сервер
 
         const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
         formData.append('key', save.key);
         formData.append('operation', save.operation);
         formData.append('data', JSON.stringify(save.data));
 
-        console.log('const formData:', formData);
+        // console.log('const formData:', formData);
 
         let response = await fetch(this.requestUrl, {
             method: 'POST',
@@ -93,12 +94,12 @@ export class HeaderProductComponent implements OnInit {
             let responseJson = await response;
             responseJson.json().then(azaza => {
                 if (azaza.success) {
-                    console.log('Success save', azaza.success);
-                    console.log('azaza', azaza);
+                    // console.log('Success save', azaza.success);
+                    // console.log('azaza', azaza);
                     this.documentCode = azaza.documentCode;
                 } else {
                     alert('Error save:' + ' ' + azaza.error?.code);
-                    console.log('Error save', azaza);
+                    // console.log('Error save', azaza);
                 }
             });
         } else {
@@ -116,7 +117,7 @@ export class HeaderProductComponent implements OnInit {
             }
         }
 
-        console.log('open', open);
+        // console.log('open', open);
 
         const formData: FormData = new FormData();
         formData.append('key', open.key);
@@ -132,11 +133,11 @@ export class HeaderProductComponent implements OnInit {
             let responseJson = await response;
             responseJson.json().then(azaza => {
                 if (azaza.success) {
-                    console.log('Success open', azaza.success);
-                    console.log('Success open', azaza);
+                    // console.log('Success open', azaza.success);
+                    // console.log('Success open', azaza);
                 } else {
                     alert('Error open:' + ' ' + azaza.error?.code);
-                    console.log('Error open', azaza);
+                    // console.log('Error open', azaza);
                 }
             });
         } else {
