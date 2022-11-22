@@ -29,5 +29,35 @@ export class JuridicalServiceService {
         }
     ]
 
-    constructor() { }
+    // Структура объекта request
+    public userFormData: any = {
+        content: {
+            // Данные программы не привязаны, пока не сделал их заполение из ответа.
+            contractData: {
+                product: {
+                    code: '',
+                    name: '',
+                    premium: null,
+                }
+            },
+
+            // Данные страхователя привязаны, но чтобы не вводить их руками оставляю заполенными
+            policyHolder: {
+                lastName: 'Фамилия',
+                firstName: 'Имя',
+                middleName: '',
+                dob: '01.01.2000',
+                phone: '89003334455',
+                email: 'sj-smirnov@mail.ru',
+                city: 'Москва',
+            }
+        }
+    }
+
+    constructor() {}
+
+    getUserData() {
+        // стрингифицирую объект, чтобы не сломать парсер и передаю его самого, чтобы он всегда был по дефолту (примерно так)
+        return this.userFormData = JSON.parse(localStorage.getItem('userFormData') || JSON.stringify(this.userFormData));
+    }
 }
