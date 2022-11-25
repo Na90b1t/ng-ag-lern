@@ -30,7 +30,7 @@ export class JuridicalServiceService {
     ]
 
     // Структура объекта request
-    public userFormData: any = {
+    public userData: any = {
         content: {
             // Данные программы не привязаны, пока не сделал их заполение из ответа.
             contractData: {
@@ -58,6 +58,6 @@ export class JuridicalServiceService {
 
     getUserData() {
         // стрингифицирую объект, чтобы не сломать парсер и передаю его самого, чтобы он всегда был по дефолту (примерно так)
-        return this.userFormData = JSON.parse(localStorage.getItem('userFormData') || JSON.stringify(this.userFormData));
+        return this.userData = JSON.parse(localStorage.getItem('userData') || JSON.stringify(this.userData));
     }
 }

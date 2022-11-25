@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
+import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
 @Component({
     selector: 'app-header-product',
@@ -15,46 +16,28 @@ export class HeaderProductComponent implements OnInit {
     documentCode = ''; // guid сохраненного документа,
     // documentNumber = ''; // Номер договора (не используется)
 
-    objRequest = { // Структура объекта request
-        content: {
-            // Данные программы не привязаны, пока не сделал их заполение из ответа, заполняю их тут в зависимости от выбора программы
-            contractData: {
-                product: {
-                    code: '',
-                    name: '',
-                    premium: 0,
-                }
-            },
-            // Данные страхователя привязаны, но чтобы не вводить их руками оставляю заполенными
-            policyHolder: {
-                lastName: 'Киров',
-                firstName: 'Матвей',
-                middleName: '',
-                dob: '01.01.2001',
-                phone: '89003334455',
-                email: 'sj-smirnov@mail.ru',
-                city: 'Москва',
-            }
-        }
-    }
+    public userData: any; // для объекта из сервиса с данными формы пользователя
 
-    // сокращаем запись пути
-    product = this.objRequest.content.contractData.product;
+    product: any = {}; // для сокращения записи пути в шаблоне в дальнейшем
 
-    constructor(private authService: AuthService) {
+    constructor(private authService: AuthService, public juridicalServiceService: JuridicalServiceService) {
+        // тут от authService
         this.title = this.authService.title;
         this.key = this.authService.key;
         this.operation = this.authService.contractSave;
         this.requestUrl = this.authService.requestUrl;
+        // тут от juridicalServiceService
+        this.userData = this.juridicalServiceService.getUserData();
+        // сокращаем запись пути
+        this.product = this.userData.content.contractData.product;
     }
 
     ngOnInit(): void {}
 
     async saveContract() {
         this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
-        this.objRequest = JSON.parse(localStorage.getItem('userData') || '" "');
-
-        // console.log('userData', this.objRequest);
+        console.log('this.product.code ', this.product.code);
+        console.log('this.product ', this.product);
 
         if (this.product.code === 'optimal') {
             this.product.name = 'Оптимальный',
@@ -71,12 +54,11 @@ export class HeaderProductComponent implements OnInit {
                 session: sessionStorage.getItem('session') || '',
                 product: 'juridicalService',
                 // documentCode: 'guid документа, если требуется пересохранение, иначе не передавать данный параметр',
-                // request:  sessionStorage.getItem('session') || '',
-                request:  localStorage.getItem('sesuserDatasion') || '',
+                request: this.userData,
             }
         }
 
-        // console.log('save', save); // данные + введенные пользователем и отправляемые на сервер
+        console.log('save', save); // данные + введенные пользователем и отправляемые на сервер
 
         const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
         formData.append('key', save.key);
@@ -95,7 +77,7 @@ export class HeaderProductComponent implements OnInit {
             responseJson.json().then(azaza => {
                 if (azaza.success) {
                     // console.log('Success save', azaza.success);
-                    // console.log('azaza', azaza);
+                    console.log('response (azaza)', azaza);
                     this.documentCode = azaza.documentCode;
                 } else {
                     alert('Error save:' + ' ' + azaza.error?.code);
@@ -117,7 +99,7 @@ export class HeaderProductComponent implements OnInit {
             }
         }
 
-        // console.log('open', open);
+        console.log('open', open);
 
         const formData: FormData = new FormData();
         formData.append('key', open.key);

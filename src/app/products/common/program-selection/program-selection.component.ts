@@ -84,11 +84,11 @@ export class ProgramSelectionComponent implements OnInit {
                     }
                     // console.log('update contractData', this.contractData);
                 } else {
-                    // console.log('azaza.success:' + ' ' + azaza.success);
+                    console.log('success:' + ' ' + azaza.success);
                 }
             });
         } else {
-            // console.log('Ошибка HTTP: ' + response.status);
+            console.log('Ошибка HTTP: ' + response.status);
         }
     }
 }

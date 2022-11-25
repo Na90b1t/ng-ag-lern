@@ -11,7 +11,6 @@ export class SignInComponent implements OnInit {
     login = '';
     password = '';
     session = '';
-    // public session: string | null = '';
     
     private readonly key: string;
     private readonly operation: string;
@@ -26,9 +25,8 @@ export class SignInComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        setTimeout(() =>
-            this.login = JSON.parse(localStorage.getItem('login') || '')
-        );
+        this.login = JSON.parse(localStorage.getItem('login') || '" "');
+        this.session = sessionStorage.getItem('session') || '';
     }
 
     loginSession() {

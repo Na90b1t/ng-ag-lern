@@ -22,17 +22,17 @@ export class UserFormComponent implements OnInit {
         mask: '+{7}(000)000-00-00'
     };
 
-    public userFormData: any; // для объекта из сервиса с данными формы пользователя
+    public userData: any; // для объекта из сервиса с данными формы пользователя
 
     policyHolder: any = {}; // для сокращения записи пути в шаблоне в дальнейшем
 
     constructor(public juridicalServiceService: JuridicalServiceService) {
-        this.userFormData = this.juridicalServiceService.userFormData; // получаю обьект из с первоначальными данными из сервиса
+        this.userData = this.juridicalServiceService.userData; // получаю обьект из с первоначальными данными из сервиса
     }
 
     ngOnInit(): void {
-        this.userFormData = this.juridicalServiceService.getUserData(); // получаем из сервиса объект с данными формы пользователя
-        this.policyHolder = this.userFormData.content.policyHolder; // сокращение пути (использую в шаблоне) переносится сюда, потому что если это был бы выше, то объект перепишется, а привязка осталась бы к старому
+        this.userData = this.juridicalServiceService.getUserData(); // получаем из сервиса объект с данными формы пользователя
+        this.policyHolder = this.userData.content.policyHolder; // сокращение пути (использую в шаблоне) переносится сюда, потому что если это был бы выше, то объект перепишется, а привязка осталась бы к старому
     }
 
     dateChange($event: { target: { value: any; }; }) {
@@ -40,6 +40,6 @@ export class UserFormComponent implements OnInit {
     }
 
     saveUserData() {
-        localStorage.setItem('userFormData', JSON.stringify(this.userFormData)); // сохраняем объект с данными формы пользователя
+        localStorage.setItem('userData', JSON.stringify(this.userData)); // сохраняем объект с данными формы пользователя
     }
 }
