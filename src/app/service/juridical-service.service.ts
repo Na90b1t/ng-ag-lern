@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class JuridicalServiceService {
 
+    public readonly title: string = 'Юридический сервис';
+
     // захардкоренные значения
     public readonly objService: Object = {
             service1: 'Устная правовая консультация',

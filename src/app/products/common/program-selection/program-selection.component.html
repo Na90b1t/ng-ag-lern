@@ -1,29 +1,25 @@
-<div style="display: flex;">
-    <div>
-        <ul class="list">
-            <li (click)="selectedProgramm(data.code)"
-                [ngClass]="{'selected' : programmName === data.code }"
-                class="list__item" 
-                *ngFor="let data of contractData">
-                <p>
-                    {{data.name}}
-                </p>
-                <p>
-                    {{data.premium}}
-                </p>
-                <p>
-                    {{data.service1}}
-                </p>
-                <p>
-                    {{data.period1}}
-                </p>
-                <p>
-                    {{data.service2}}
-                </p>
-                <p>
-                    {{data.period2}}
-                </p>
-            </li>
-        </ul>
-    </div>
-</div>
+<ul class="list">
+    <li (click)="selectedProgramm(data.code)"
+        [ngClass]="{'selected' : programmName === data.code }"
+        class="list__item" 
+        *ngFor="let data of contractData">
+        <p class="list__text">
+            {{data.name}}
+        </p>
+        <p class="list__text">
+            {{data.premium}}
+        </p>
+        <p class="list__text">
+            {{data.service1}}
+        </p>
+        <p class="list__text">
+            {{data.period1}}
+        </p>
+        <p class="list__text">
+            {{data.service2}}
+        </p>
+        <p class="list__text">
+            {{data.period2}}
+        </p>
+    </li>
+</ul>

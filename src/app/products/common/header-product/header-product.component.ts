@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CONTRACT_OPEN, CONTRACT_SAVE, KEY, REQUEST_URL } from 'src/app/constants/constants';
 import { AuthService } from 'src/app/service/auth.service';
 import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
@@ -8,9 +9,9 @@ import { JuridicalServiceService } from 'src/app/service/juridical-service.servi
     styleUrls: ['./header-product.component.scss']
 })
 export class HeaderProductComponent implements OnInit {
-    private readonly key: string;
-    private readonly operation: string;
-    private readonly requestUrl: string;
+    // private readonly key: string;
+    // private readonly operation: string;
+    // private readonly requestUrl: string;
     public readonly title: string;
 
     documentCode = ''; // guid сохраненного документа,
@@ -22,14 +23,15 @@ export class HeaderProductComponent implements OnInit {
 
     constructor(private authService: AuthService, public juridicalServiceService: JuridicalServiceService) {
         // тут от authService
-        this.title = this.authService.title;
-        this.key = this.authService.key;
-        this.operation = this.authService.contractSave;
-        this.requestUrl = this.authService.requestUrl;
+        // this.key = this.authService.key;
+        // this.requestUrl = this.authService.requestUrl;
         // тут от juridicalServiceService
+        this.title = this.juridicalServiceService.title;
         this.userData = this.juridicalServiceService.getUserData();
         // сокращаем запись пути
         this.product = this.userData.content.contractData.product;
+        // // тут constants
+        // this.operation = CONTRACT_SAVE;
     }
 
     ngOnInit(): void {}
@@ -48,8 +50,8 @@ export class HeaderProductComponent implements OnInit {
         }
 
         let save = {
-            key: this.key,
-            operation: this.operation,
+            key: KEY,
+            operation: CONTRACT_SAVE,
             data: {
                 session: sessionStorage.getItem('session') || '',
                 product: 'juridicalService',
@@ -67,7 +69,7 @@ export class HeaderProductComponent implements OnInit {
 
         // console.log('const formData:', formData);
 
-        let response = await fetch(this.requestUrl, {
+        let response = await fetch(REQUEST_URL, {
             method: 'POST',
             body: formData
         });
@@ -91,8 +93,8 @@ export class HeaderProductComponent implements OnInit {
 
     async openContract() {
         let open = {
-            key: this.key,
-            operation: 'contract.open',
+            key: KEY,
+            operation: CONTRACT_OPEN,
             data: {
                 session: sessionStorage.getItem('session') || '',
                 code: this.documentCode,
@@ -106,7 +108,7 @@ export class HeaderProductComponent implements OnInit {
         formData.append('operation', open.operation);
         formData.append('data', JSON.stringify(open.data));
 
-        let response = await fetch(this.requestUrl, {
+        let response = await fetch(REQUEST_URL, {
             method: 'POST',
             body: formData
         });

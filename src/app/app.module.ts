@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 // Модули приложения
 import { AuthModule } from './auth/auth.module';
 import { LegalServiceModule } from './products/legal-service/legal-service.module';
+import { SalesAccountingModule } from './products/common/sales-accounting/sales-accounting.module';
 // Сервис для учебы(черновик), один на все компоненты
 import { DraftService } from './draft.service';
 // Учебные(черновики) компоненты
@@ -35,7 +36,8 @@ import { DraftObjectComponent } from './drafts/draft-object/draft-object.compone
         NgScrollbarModule,
         SimplebarAngularModule,
         AuthModule,
-        LegalServiceModule
+        LegalServiceModule,
+        SalesAccountingModule
     ],
     providers: [DraftService],
     bootstrap: [AppComponent]

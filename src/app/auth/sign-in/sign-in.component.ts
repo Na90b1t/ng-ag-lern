@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
+import { KEY, REQUEST_URL } from '../../constants/constants';
 
 @Component({
     selector: 'app-sign-in',
@@ -8,20 +9,20 @@ import { AuthService } from 'src/app/service/auth.service';
 })
 
 export class SignInComponent implements OnInit {
-    login = '';
-    password = '';
-    session = '';
+    login: string = '';
+    password: string = '';
+    session: string = '';
     
-    private readonly key: string;
+    // private readonly key: string;
     private readonly operation: string;
-    private readonly requestUrl: string;
+    // private readonly requestUrl: string;
 
     @Output() outputSession: EventEmitter<any> = new EventEmitter(); // передаем сессию для отображения компонентов
 
     constructor(private authService: AuthService) {
-        this.key = this.authService.key;
+        // this.key = KEY;
         this.operation = this.authService.operationAuth;
-        this.requestUrl = this.authService.requestUrl;
+        // this.requestUrl = REQUEST_URL;
     }
 
     ngOnInit(): void {
@@ -35,7 +36,7 @@ export class SignInComponent implements OnInit {
 
     async requestApi() {
         let authorization = {
-            key: this.key,
+            key: KEY,
             operation: this.operation,
             // получаем от ввода пользователя
             data: {
@@ -49,7 +50,7 @@ export class SignInComponent implements OnInit {
         formData.append('operation', authorization.operation);
         formData.append('data', JSON.stringify(authorization.data));
 
-        let response = await fetch(this.requestUrl, {
+        let response = await fetch(REQUEST_URL, {
             method: 'POST',
             body: formData
         });
@@ -64,41 +65,6 @@ export class SignInComponent implements OnInit {
                     this.loginSession(); // передача события в родительский компонент.
                     localStorage.setItem('login', JSON.stringify(authorization.data.login));
                     this.password = ''; // сброс пароля после входа.
-                } else {
-                    alert('Error:' + ' ' + azaza.error?.code);
-                }
-            });
-        } else {
-            alert("Ошибка HTTP: " + response.status);
-        }
-    }
-
-    async logOut() {
-        let logout = {
-            key: this.key,
-            operation: 'user.logout',
-            data: {
-                session: sessionStorage.getItem('session') || '',
-            },
-        };
-
-        const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
-        formData.append('key', logout.key);
-        formData.append('operation', logout.operation);
-        formData.append('data', JSON.stringify(logout.data));
-
-        let response = await fetch(this.requestUrl, {
-            method: 'POST',
-            body: formData
-        });
-
-        if (response.ok) {
-            let responseJson = await response;
-            responseJson.json().then(azaza => {
-                if (azaza.success) {
-                    // console.log('logout', azaza.success); // подтверждение разлогина.
-                    this.session = ''; // сброс сессии, поскольку был разлогин.
-                    sessionStorage.removeItem('session'); // очистка сессии из сторожа, поскольку был разлогин.
                 } else {
                     alert('Error:' + ' ' + azaza.error?.code);
                 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CONTRACT_SAVE, KEY, REGISTER_GET, REQUEST_URL } from 'src/app/constants/constants';
 import { AuthService} from 'src/app/service/auth.service';
 import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
@@ -8,22 +9,22 @@ import { JuridicalServiceService } from 'src/app/service/juridical-service.servi
     styleUrls: ['./program-selection.component.scss']
 })
 export class ProgramSelectionComponent implements OnInit {
-    private readonly key: string;
-    private readonly operation: string;
-    private readonly requestUrl: string;
+    // private readonly key: string;
+    // private readonly operation: string;
+    // private readonly requestUrl: string;
 
     // захардкоренные значения
     private readonly objService: Object;
     private readonly objPeriod: Object[];
 
-    contractData: any; // объект для получения данных с сервера
-
     programmName: string = 'optimal'; // программа по умолчанию
 
+    contractData: any; // объект для получения данных с сервера
+
     constructor(private authService: AuthService, private juridicalServiceService: JuridicalServiceService) {
-        this.key = this.authService.key;
-        this.operation = this.authService.registerGet;
-        this.requestUrl = this.authService.requestUrl;
+        // this.key = this.authService.key;
+        // this.operation = REGISTER_GET;
+        // this.requestUrl = this.authService.requestUrl;
 
         // захардкоренные значения
         this.objService = this.juridicalServiceService.objService;
@@ -35,16 +36,10 @@ export class ProgramSelectionComponent implements OnInit {
         this.getAvailablePrograms(); // передаем данные на сервер и выводим список программ из ответа + добавляем захардкоренные значения.
     }
 
-    // метод нужен только для смены значения выбранной программы, при первом запуске оно возмется из переменой со значением берущимся из сторожа или по умолчанию 
-    selectedProgramm(key: string) { // принимаем параметр передаваемый по клику
-        this.programmName = key; // заносим название программы, чтобы в шаблоне мы сравнивали значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
-        localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
-    }
-
     async getAvailablePrograms() {
         let register = {
-            key: this.key,
-            operation: this.operation,
+            key: KEY,
+            operation: REGISTER_GET,
             data: {
                 register: 'juridicalService',
             },
@@ -55,7 +50,7 @@ export class ProgramSelectionComponent implements OnInit {
         formData.append('operation', register.operation);
         formData.append('data', JSON.stringify(register.data));
 
-        let response = await fetch(this.requestUrl, {
+        let response = await fetch(REQUEST_URL, {
             method: 'POST',
             body: formData
         });
@@ -90,5 +85,11 @@ export class ProgramSelectionComponent implements OnInit {
         } else {
             console.log('Ошибка HTTP: ' + response.status);
         }
+    }
+
+    // метод нужен только для смены значения выбранной программы, при первом запуске оно возмется из переменой со значением берущимся из сторожа или по умолчанию 
+    selectedProgramm(key: string) { // принимаем параметр передаваемый по клику
+        this.programmName = key; // заносим название программы, чтобы в шаблоне мы сравнивали значение параметра со значением в элементе массива, тем самым подтверждая совпадение, что и приводит нас к выполнению условия для провешивания класса.
+        localStorage.setItem('programmName', JSON.stringify(key)); // сохраняем ключ по которому будем определять выбранную программу 
     }
 }
