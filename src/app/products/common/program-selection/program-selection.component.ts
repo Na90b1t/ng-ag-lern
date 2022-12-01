@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CONTRACT_SAVE, KEY, REGISTER_GET, REQUEST_URL } from 'src/app/constants/constants';
-import { AuthService} from 'src/app/service/auth.service';
+import { KEY, REGISTER_GET, REQUEST_URL } from 'src/app/constants/constants';
 import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
 @Component({
@@ -8,11 +7,8 @@ import { JuridicalServiceService } from 'src/app/service/juridical-service.servi
     templateUrl: './program-selection.component.html',
     styleUrls: ['./program-selection.component.scss']
 })
-export class ProgramSelectionComponent implements OnInit {
-    // private readonly key: string;
-    // private readonly operation: string;
-    // private readonly requestUrl: string;
 
+export class ProgramSelectionComponent implements OnInit {
     // захардкоренные значения
     private readonly objService: Object;
     private readonly objPeriod: Object[];
@@ -21,11 +17,7 @@ export class ProgramSelectionComponent implements OnInit {
 
     contractData: any; // объект для получения данных с сервера
 
-    constructor(private authService: AuthService, private juridicalServiceService: JuridicalServiceService) {
-        // this.key = this.authService.key;
-        // this.operation = REGISTER_GET;
-        // this.requestUrl = this.authService.requestUrl;
-
+    constructor(private juridicalServiceService: JuridicalServiceService) {
         // захардкоренные значения
         this.objService = this.juridicalServiceService.objService;
         this.objPeriod = this.juridicalServiceService.objPeriod;
@@ -54,21 +46,17 @@ export class ProgramSelectionComponent implements OnInit {
             method: 'POST',
             body: formData
         });
-        // console.log('response', response);
 
         if (response.ok) {
             let responseJson = await response;
-            responseJson.json().then(azaza => {
-                // console.log('Ответ системы azaza:', typeof azaza, azaza);
-                if (azaza.success) {
-                    // console.log('azaza.success', azaza.success);
+            responseJson.json().then(data => {
+                // console.log('Ответ системы data:', typeof data, data);
+                if (data.success) {
+                    console.log('get programm:', data.success);
                     // console.log('this.contractData', this.contractData); // наша переменная для списка программ, в которой пока ничего нет (undifined).
-
-                    this.contractData = azaza.result; // получаем список программ
-
-                    // console.log('this.contractData = azaza.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
+                    this.contractData = data.result; // получаем список программ
+                    // console.log('this.contractData = data.result', this.contractData); // теперь есть данные из ответа плюс, уже те, что добавляются после(ниже цикл), из-за того что объект это ссылка.
                     // console.log('this.contractData before update', Object.assign([], this.contractData)); // копируем обьект для логирования, до его изменения.
-
                     // тут мы каждому элементу (объекту) в массиве, добавляем данные из объектов, чтобы дополнить данные из списка программ, которые должны были по хорошему приходить с сервера.
                     for (let i = 0; i < this.contractData.length; i++) {
                         this.contractData[i] = {
@@ -79,11 +67,11 @@ export class ProgramSelectionComponent implements OnInit {
                     }
                     // console.log('update contractData', this.contractData);
                 } else {
-                    console.log('success:' + ' ' + azaza.success);
+                    alert('get programm:' + ' ' + data.success);
                 }
             });
         } else {
-            console.log('Ошибка HTTP: ' + response.status);
+            alert('Ошибка HTTP: ' + response.status);
         }
     }
 

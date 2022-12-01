@@ -30,6 +30,7 @@
 
     &__input {
         min-width: 180px;
+        border: 1px solid black;
 
         &:invalid:not(:placeholder-shown) {
             border: 1px solid red;

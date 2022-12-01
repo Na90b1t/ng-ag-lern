@@ -7,6 +7,7 @@ import { JuridicalServiceService } from 'src/app/service/juridical-service.servi
     templateUrl: './user-form.component.html',
     styleUrls: ['./user-form.component.scss']
 })
+
 export class UserFormComponent implements OnInit {
     options = {
         autoHide: false,
@@ -41,5 +42,6 @@ export class UserFormComponent implements OnInit {
 
     saveUserData() {
         localStorage.setItem('userData', JSON.stringify(this.userData)); // сохраняем объект с данными формы пользователя
+        console.log('saveUserData: start');
     }
 }

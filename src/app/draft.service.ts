@@ -16,7 +16,7 @@ export class DraftService {
     }
 
     constructor() {
-        this.session = sessionStorage.getItem('session-service') || '';
+        this.session = sessionStorage.getItem('session') || '';
     }
 
     get sessionUser() {
@@ -25,7 +25,7 @@ export class DraftService {
 
     set sessionUser(session: any) {
         this.session = session;
-        // sessionStorage.setItem('session-service', this.session);
+        // sessionStorage.setItem('session', this.session);
     }
 
 /*  getSession() {

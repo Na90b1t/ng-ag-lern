@@ -13,9 +13,7 @@ export class LogoutComponent implements OnInit {
     private readonly operation: string;
 
     constructor(private authService: AuthService) {
-        // this.key = KEY;
         this.operation = this.authService.operationLOGOUT;
-        // this.requestUrl = REQUEST_URL;
     }
 
     ngOnInit(): void {}
@@ -41,13 +39,13 @@ export class LogoutComponent implements OnInit {
 
         if (response.ok) {
             let responseJson = await response;
-            responseJson.json().then(azaza => {
-                if (azaza.success) {
-                    // console.log('logout', azaza.success); // подтверждение разлогина.
+            responseJson.json().then(data => {
+                if (data.success) {
+                    console.log('logout:', data.success); // подтверждение разлогина.
                     this.session = ''; // сброс сессии, поскольку был разлогин.
                     sessionStorage.removeItem('session'); // очистка сессии из сторожа, поскольку был разлогин.
                 } else {
-                    alert('Error:' + ' ' + azaza.error?.code);
+                    alert('Error:' + ' ' + data.error?.code);
                 }
             });
         } else {

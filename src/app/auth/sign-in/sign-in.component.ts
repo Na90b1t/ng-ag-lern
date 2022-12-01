@@ -13,16 +13,12 @@ export class SignInComponent implements OnInit {
     password: string = '';
     session: string = '';
     
-    // private readonly key: string;
     private readonly operation: string;
-    // private readonly requestUrl: string;
 
     @Output() outputSession: EventEmitter<any> = new EventEmitter(); // передаем сессию для отображения компонентов
 
     constructor(private authService: AuthService) {
-        // this.key = KEY;
         this.operation = this.authService.operationAuth;
-        // this.requestUrl = REQUEST_URL;
     }
 
     ngOnInit(): void {
@@ -57,16 +53,16 @@ export class SignInComponent implements OnInit {
 
         if (response.ok) {
             let responseJson = await response;
-            responseJson.json().then(azaza => {
-                if (azaza.success) {
-                    // console.log('azaza.success', azaza.success);
-                    this.session = azaza?.result?.session;
-                    sessionStorage.setItem('session', this.session);
+            responseJson.json().then(data => {
+                if (data.success) {
+                    console.log('authorization:', data.success); // подтверждаем что авторизовались
+                    this.session = data?.result?.session; // получаем сессию
+                    sessionStorage.setItem('session', this.session); // сохраняем сессию в сессионый сторож
                     this.loginSession(); // передача события в родительский компонент.
                     localStorage.setItem('login', JSON.stringify(authorization.data.login));
                     this.password = ''; // сброс пароля после входа.
                 } else {
-                    alert('Error:' + ' ' + azaza.error?.code);
+                    alert('Error:' + ' ' + data.error?.code);
                 }
             });
         } else {

@@ -5,6 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
     templateUrl: './legal-service.component.html',
     styleUrls: ['./legal-service.component.scss']
 })
+
 export class LegalServiceComponent implements OnInit {
 
     @Input() session: any;

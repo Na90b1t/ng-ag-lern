@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
+
 export class JuridicalServiceService {
 
     public readonly title: string = 'Юридический сервис';

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CONTRACT_OPEN, CONTRACT_SAVE, KEY, REQUEST_URL } from 'src/app/constants/constants';
-import { AuthService } from 'src/app/service/auth.service';
 import { JuridicalServiceService } from 'src/app/service/juridical-service.service';
 
 @Component({
@@ -8,10 +7,8 @@ import { JuridicalServiceService } from 'src/app/service/juridical-service.servi
     templateUrl: './header-product.component.html',
     styleUrls: ['./header-product.component.scss']
 })
+
 export class HeaderProductComponent implements OnInit {
-    // private readonly key: string;
-    // private readonly operation: string;
-    // private readonly requestUrl: string;
     public readonly title: string;
 
     documentCode = ''; // guid сохраненного документа,
@@ -21,25 +18,17 @@ export class HeaderProductComponent implements OnInit {
 
     product: any = {}; // для сокращения записи пути в шаблоне в дальнейшем
 
-    constructor(private authService: AuthService, public juridicalServiceService: JuridicalServiceService) {
-        // тут от authService
-        // this.key = this.authService.key;
-        // this.requestUrl = this.authService.requestUrl;
-        // тут от juridicalServiceService
+    constructor(public juridicalServiceService: JuridicalServiceService) {
         this.title = this.juridicalServiceService.title;
         this.userData = this.juridicalServiceService.getUserData();
         // сокращаем запись пути
         this.product = this.userData.content.contractData.product;
-        // // тут constants
-        // this.operation = CONTRACT_SAVE;
     }
 
     ngOnInit(): void {}
 
     async saveContract() {
         this.product.code = JSON.parse(localStorage.getItem('programmName') || '"optimal"');
-        console.log('this.product.code ', this.product.code);
-        console.log('this.product ', this.product);
 
         if (this.product.code === 'optimal') {
             this.product.name = 'Оптимальный',
@@ -48,6 +37,8 @@ export class HeaderProductComponent implements OnInit {
             this.product.name = 'Расширенный',
             this.product.premium = 6000
         }
+
+        // console.log('product:', this.product);
 
         let save = {
             key: KEY,
@@ -60,14 +51,12 @@ export class HeaderProductComponent implements OnInit {
             }
         }
 
-        console.log('save', save); // данные + введенные пользователем и отправляемые на сервер
+        // console.log('save:', save); // данные + введенные пользователем и отправляемые на сервер
 
         const formData: FormData = new FormData(); // использует этот формат данных для передачи их в с соответствии с API.
         formData.append('key', save.key);
         formData.append('operation', save.operation);
         formData.append('data', JSON.stringify(save.data));
-
-        // console.log('const formData:', formData);
 
         let response = await fetch(REQUEST_URL, {
             method: 'POST',
@@ -76,14 +65,12 @@ export class HeaderProductComponent implements OnInit {
 
         if (response.ok) {
             let responseJson = await response;
-            responseJson.json().then(azaza => {
-                if (azaza.success) {
-                    // console.log('Success save', azaza.success);
-                    console.log('response (azaza)', azaza);
-                    this.documentCode = azaza.documentCode;
+            responseJson.json().then(data => {
+                if (data.success) {
+                    console.log('save:', data.success);
+                    this.documentCode = data.documentCode;
                 } else {
-                    alert('Error save:' + ' ' + azaza.error?.code);
-                    // console.log('Error save', azaza);
+                    alert('Error:' + ' ' + data.error?.code);
                 }
             });
         } else {
@@ -101,8 +88,6 @@ export class HeaderProductComponent implements OnInit {
             }
         }
 
-        console.log('open', open);
-
         const formData: FormData = new FormData();
         formData.append('key', open.key);
         formData.append('operation', open.operation);
@@ -115,13 +100,11 @@ export class HeaderProductComponent implements OnInit {
 
         if (response.ok) {
             let responseJson = await response;
-            responseJson.json().then(azaza => {
-                if (azaza.success) {
-                    // console.log('Success open', azaza.success);
-                    // console.log('Success open', azaza);
+            responseJson.json().then(data => {
+                if (data.success) {
+                    console.log('open:', data.success);
                 } else {
-                    alert('Error open:' + ' ' + azaza.error?.code);
-                    // console.log('Error open', azaza);
+                    alert('Error:' + ' ' + data.error?.code);
                 }
             });
         } else {

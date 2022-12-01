@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SalesAccountingService } from 'src/app/service/sales-accounting.service';
 
 @Component({
@@ -6,21 +6,28 @@ import { SalesAccountingService } from 'src/app/service/sales-accounting.service
     templateUrl: './sales-accounting.component.html',
     styleUrls: ['./sales-accounting.component.scss'],
     providers: [SalesAccountingService]
-    })
-    export class SalesAccountingComponent implements OnInit {
+})
+
+export class SalesAccountingComponent implements OnInit {
+
+    @Input() session: any; // для отображения на странице
 
     contractData: any; // объект для получения данных с сервера
+    // product: any;
 
-    userData: any = [
-        {
-            city: 'Москва',
-        }
-    ]
+    constructor(public salesAccountingService: SalesAccountingService) {
+        // this.contractData = this.salesAccountingService.getSales();
+        this.salesAccountingService.getSales();
+        console.log('constructor contractData', this.contractData);
 
-    constructor() { }
+        // сокращаем запись пути
+        // this.product = this.contractData.content.contractData.product;
+    }
 
     ngOnInit(): void {
-        this.contractData = this.userData;
+        console.log('ngOnInit contractData', this.contractData);
+        // this.contractData = this.salesAccountingService.getSalesPage();
+        // console.log('this.contractData', this.contractData);
     }
 
 }
