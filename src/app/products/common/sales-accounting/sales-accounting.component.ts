@@ -16,8 +16,14 @@ export class SalesAccountingComponent implements OnInit {
     // product: any;
 
     constructor(public salesAccountingService: SalesAccountingService) {
+        // this.contractData = this.salesAccountingService.getSales(); // так мы не можем ?
         // this.contractData = this.salesAccountingService.getSales();
-        this.salesAccountingService.getSales();
+
+        this.salesAccountingService.getSales().then(responce => {
+            this.contractData = responce;
+        });
+
+        // this.contractData = this.salesAccountingService.contractData;
         console.log('constructor contractData', this.contractData);
 
         // сокращаем запись пути
