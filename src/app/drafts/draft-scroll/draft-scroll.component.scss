@@ -1,0 +1,31 @@
+.scrollWrap {
+    display: flex; 
+    width: 100%;
+    height: 300px;
+    margin: 20px 0 60px;
+}
+
+.bigDiv {
+    height: 1000px;
+    width: 100%;
+    background-color: blue;
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+}
+
+.ngScrollbarModule {
+    height: 1000px;
+    width: 100%;
+    background-color: aqua;
+    background-image: linear-gradient(to right top, #6bd18e, #a9c262, #d7ad55, #f7966a, #ff8493, #ff859c, #ff87a5, #ff89ae, #ff9790, #ffb36f, #ffd658, #e7fb5f);
+}
+
+.simplebarAngularModule {
+    height: 1000px;
+    width: 100%;
+    background-color: aqua;
+    // background-image: linear-gradient(to right top, #f8eb00, #ffc628, #ffa24e, #ff866f, #ff748a, #ff6296, #fc50a6, #f243bb, #e121c8, #c800d8, #a300eb, #6300ff);
+}
+
+.simplebar-scrollbar::before {
+    background-color: red; // не работает скатина
+}

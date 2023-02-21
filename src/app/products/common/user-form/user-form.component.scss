@@ -1,0 +1,43 @@
+.selected {
+    background-color: blue;
+}
+
+.product-form {
+    width: 100%;
+
+    &__content {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 calc(100% / 3);
+        padding: 0 20px;
+    }
+
+    &__row {
+        margin-bottom: 20px;
+    }
+
+    &__label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    &__input {
+        min-width: 180px;
+        border: 1px solid black;
+
+        &:invalid:not(:placeholder-shown) {
+            border: 1px solid red;
+        }
+
+        &:valid:not(:placeholder-shown) {
+            border: 1px solid greenyellow;
+        }
+    }
+}

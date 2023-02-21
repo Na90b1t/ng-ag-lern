@@ -1,3 +1,7 @@
-<app-login (outputSession)="checkSession()"></app-login>
-<app-customer-data *ngIf="session" [session]="session"></app-customer-data>
-<app-calculation *ngIf="session" [session]="session"></app-calculation>
+<app-auth></app-auth>
+<app-sign-in (outputSession)="getSession()"></app-sign-in>
+<app-legal-service *ngIf="session" [session]="session"></app-legal-service>
+<app-sales-accounting *ngIf="session" [session]="session"></app-sales-accounting>
+
+<!-- <app-draft-scroll></app-draft-scroll> -->
+<!-- <app-draft-user></app-draft-user> -->

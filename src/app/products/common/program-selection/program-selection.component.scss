@@ -1,0 +1,29 @@
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 calc(100% / 2 - 30px);
+        list-style-type: none;
+        padding: 0 15px;
+        margin: 0 15px;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: 0 0 20px 1px gray;
+        }
+    }
+    
+    &__text {
+        margin: 10px 0;
+    }
+}
+
+.selected {
+    background-color: pink;
+}
